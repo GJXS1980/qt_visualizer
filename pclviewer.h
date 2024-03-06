@@ -44,19 +44,8 @@ public:
 public Q_SLOTS:
   void randomButtonPressed ();
 
-  void RGBsliderReleased ();
-
-  void pSliderValueChanged (int value);
-
-  void redSliderValueChanged (int value);
-
-  void greenSliderValueChanged (int value);
-
-  void blueSliderValueChanged (int value);
-
-  void ImagViewer();
-
-  void convertImageToPointCloud(const QImage &image, pcl::PointCloud<pcl::PointXYZRGB>::Ptr &cloud);
+  void DLImagViewer();
+  void resultImagViewer();
 
 protected:
   void
@@ -64,12 +53,7 @@ protected:
 
   pcl::visualization::PCLVisualizer::Ptr viewer;
   pcl::visualization::PCLVisualizer::Ptr viewerPointClound;
-  pcl::visualization::PCLVisualizer::Ptr viewerColorImg;
   PointCloudT::Ptr cloud;
-
-  unsigned int red;
-  unsigned int green;
-  unsigned int blue;
 
 private:
   Ui::PCLViewer *ui;

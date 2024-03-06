@@ -35,6 +35,7 @@ PCLViewer::PCLViewer (QWidget *parent) :
   ui->qvtkWidget->setRenderWindow(viewer->getRenderWindow());
   viewer->setupInteractor(ui->qvtkWidget->interactor(), ui->qvtkWidget->renderWindow());
 
+
   auto renderer1 = vtkSmartPointer<vtkRenderer>::New();
   auto renderWindow1 = vtkSmartPointer<vtkGenericOpenGLRenderWindow>::New();
   renderWindow1->AddRenderer(renderer1);
@@ -42,17 +43,6 @@ PCLViewer::PCLViewer (QWidget *parent) :
   viewerPointClound.reset(new pcl::visualization::PCLVisualizer(renderer1, renderWindow1, "PointCloundviewer", false));
   ui->qvtkPointWidget->setRenderWindow(viewerPointClound->getRenderWindow());
   viewerPointClound->setupInteractor(ui->qvtkPointWidget->interactor(), ui->qvtkPointWidget->renderWindow());
-
-
-  // 使用 VTK 中的 PNG 读取器 qvtkImagWidget
-  auto Imgrenderer = vtkSmartPointer<vtkRenderer>::New();
-  auto ImgrenderWindow = vtkSmartPointer<vtkGenericOpenGLRenderWindow>::New();
-  ImgrenderWindow->AddRenderer(Imgrenderer);
-
-  viewerColorImg.reset(new pcl::visualization::PCLVisualizer(Imgrenderer, ImgrenderWindow, "Imgviewer", false));
-  ui->qvtkImagWidget->setRenderWindow(viewerColorImg->getRenderWindow());
-  viewerColorImg->setupInteractor(ui->qvtkImagWidget->interactor(), ui->qvtkImagWidget->renderWindow());
-
 
 #else
   viewer.reset(new pcl::visualization::PCLVisualizer("viewer", false));
@@ -68,20 +58,8 @@ PCLViewer::PCLViewer (QWidget *parent) :
   // Connect "random" button and the function
   connect (ui->pushButton_random,  SIGNAL (clicked ()), this, SLOT (randomButtonPressed ()));
 
-//  // Connect R,G,B sliders and their functions
-//  connect (ui->horizontalSlider_R, SIGNAL (valueChanged (int)), this, SLOT (redSliderValueChanged (int)));
-//  connect (ui->horizontalSlider_G, SIGNAL (valueChanged (int)), this, SLOT (greenSliderValueChanged (int)));
-//  connect (ui->horizontalSlider_B, SIGNAL (valueChanged (int)), this, SLOT (blueSliderValueChanged (int)));
-//  connect (ui->horizontalSlider_R, SIGNAL (sliderReleased ()), this, SLOT (RGBsliderReleased ()));
-//  connect (ui->horizontalSlider_G, SIGNAL (sliderReleased ()), this, SLOT (RGBsliderReleased ()));
-//  connect (ui->horizontalSlider_B, SIGNAL (sliderReleased ()), this, SLOT (RGBsliderReleased ()));
-
-  // Connect point size slider
-//  connect (ui->horizontalSlider_p, SIGNAL (valueChanged (int)), this, SLOT (pSliderValueChanged (int)));
-
   viewer->addPointCloud (cloud, "cloud");
   viewerPointClound->addPointCloud (cloud, "cloud");
-//  pSliderValueChanged (2);
    viewerPointClound->resetCamera ();
   viewer->resetCamera ();
   
@@ -186,22 +164,12 @@ try
     viewer->resetCamera();
     viewerPointClound->resetCamera();
 
-
-//    // 读取图片
-    QImageReader Imgreader("2DColorImage.png");
-    // 转换 QImage 到 QPixmap
-    QImage image = Imgreader.read();
-
-    pcl::PointCloud<pcl::PointXYZRGB>::Ptr cloud2(new pcl::PointCloud<pcl::PointXYZRGB>);
-    convertImageToPointCloud(image, cloud2);
-    viewerColorImg->addPointCloud(cloud, "image_cloud");
-    viewerColorImg->setPointCloudRenderingProperties(pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 1, "image_cloud");
-    viewerColorImg->setPointCloudRenderingProperties(pcl::visualization::PCL_VISUALIZER_OPACITY, 0.8, "image_cloud");
-
+    // 实例分割图像可视化
+    DLImagViewer();
+    // 结果图像可视化
+    resultImagViewer();
 
     refreshView();
-
-
 
 
   }
@@ -210,25 +178,6 @@ try
     std::cerr << "Exception caught: " << e.what() << std::endl;
     // 处理异常的代码
 }
-}
-
-void PCLViewer::RGBsliderReleased ()
-{
-  // Set the new color
-  for (auto& point: *cloud)
-  {
-    point.r = red;
-    point.g = green;
-    point.b = blue;
-  }
-  viewer->updatePointCloud (cloud, "cloud");
-  refreshView();
-}
-
-void PCLViewer::pSliderValueChanged (int value)
-{
-  viewer->setPointCloudRenderingProperties (pcl::visualization::PCL_VISUALIZER_POINT_SIZE, value, "cloud");
-  refreshView();
 }
 
 
@@ -243,7 +192,7 @@ void PCLViewer::refreshView()
 #if VTK_MAJOR_VERSION > 8
   ui->qvtkWidget->renderWindow()->Render();
   ui->qvtkPointWidget->renderWindow()->Render();
-  ui->qvtkImagWidget->renderWindow()->Render();
+//  ui->qvtkImagWidget->renderWindow()->Render();
 #else
   ui->qvtkWidget->update();
   ui->qvtkPointWidget->update();
@@ -253,23 +202,6 @@ void PCLViewer::refreshView()
 #endif
 }
 
-void PCLViewer::redSliderValueChanged (int value)
-{
-  red = value;
-  printf ("redSliderValueChanged: [%d|%d|%d]\n", red, green, blue);
-}
-
-void PCLViewer::greenSliderValueChanged (int value)
-{
-  green = value;
-  printf ("greenSliderValueChanged: [%d|%d|%d]\n", red, green, blue);
-}
-
-void PCLViewer::blueSliderValueChanged (int value)
-{
-  blue = value;
-  printf("blueSliderValueChanged: [%d|%d|%d]\n", red, green, blue);
-}
 
 PCLViewer::~PCLViewer ()
 {
@@ -277,89 +209,57 @@ PCLViewer::~PCLViewer ()
 }
 
 
-void PCLViewer::ImagViewer ()
+/**
+ * @brief 深度学习实例分割可视化界面
+ *
+ * @param None
+ * @return None
+ */
+void PCLViewer::DLImagViewer ()
 {
+    // 读取图片
+    QImageReader Imgreader("2DColorImage.png");
+    QImage image = Imgreader.read();
 
+    // 转换 QImage 到 QPixmap
+    QPixmap pixmap = QPixmap::fromImage(image);
 
+    // 获取 dlImg显示框 的大小
+    int labelWidth = ui->dlImg->width();
+    int labelHeight = ui->dlImg->height();
 
-//void displayImage(const QString &imagePath, vtkSmartPointer<vtkRenderer> renderer, pcl::visualization::PCLVisualizer::Ptr pclViewer, QVTKWidget *qvtkWidget)
-//{
-//    // 读取图片
-//    QImageReader reader(imagePath);
-//    QImage image = reader.read();
+    // 调整 QPixmap 的大小以适应dlImg显示框
+    QPixmap scaledPixmap = pixmap.scaled(labelWidth, labelHeight, Qt::KeepAspectRatio);
 
-//    // 检查是否成功读取图片
-//    if (image.isNull()) {
-//        qDebug() << "Failed to load image from" << imagePath;
-//        return;
-//    }
-
-//    // 转换 QImage 到 QPixmap
-//    QPixmap pixmap = QPixmap::fromImage(image);
-
-//    // 在 QLabel 中显示 QPixmap
-//    QLabel label;
-//    label.setPixmap(pixmap);
-
-//    // 设置窗口标题
-//    label.setWindowTitle("Image Viewer");
-
-//    // 如果有提供的 VTK 渲染器，将其用于渲染图片
-//    if (renderer) {
-//        vtkSmartPointer<vtkImageActor> imageActor = vtkSmartPointer<vtkImageActor>::New();
-//        imageActor->SetInputData(imageToVtkImageData(image));
-//        renderer->AddActor(imageActor);
-//        renderer->ResetCamera();
-//        qvtkWidget->GetRenderWindow()->Render();
-//    }
-
-//    // 如果有提供的 PCLVisualizer，将图片作为背景显示
-//    if (pclViewer) {
-//        pcl::PointCloud<pcl::PointXYZRGB>::Ptr cloud(new pcl::PointCloud<pcl::PointXYZRGB>);
-//        convertImageToPointCloud(image, cloud);
-//        pclViewer->addPointCloud(cloud, "image_cloud");
-//        pclViewer->setPointCloudRenderingProperties(pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 1, "image_cloud");
-//        pclViewer->setPointCloudRenderingProperties(pcl::visualization::PCL_VISUALIZER_OPACITY, 0.8, "image_cloud");
-//    }
-
-//    // 显示 Qt 窗口
-//    label.show();
-//}
+    // 在 QLabel 中显示调整大小后的 QPixmap
+    ui->dlImg->setPixmap(scaledPixmap);
 
 }
 
-
-void PCLViewer::convertImageToPointCloud(const QImage &image, pcl::PointCloud<pcl::PointXYZRGB>::Ptr &cloud)
+/**
+ * @brief 码垛结果可视化界面
+ *
+ * @param None
+ * @return None
+ */
+void PCLViewer::resultImagViewer ()
 {
-    // 根据你的需要实现将 QImage 转换为 PCL 点云的逻辑
-    // 这里只是一个简单的示例，仅用于演示
 
-    // 创建一个点云
-    cloud.reset(new pcl::PointCloud<pcl::PointXYZRGB>);
+    // 读取图片
+    QImageReader Imgreader("2DColorImage.png");
+    QImage image = Imgreader.read();
 
-    // 假设图片大小为 width x height
-    int width = image.width();
-    int height = image.height();
+    // 转换 QImage 到 QPixmap
+    QPixmap pixmap = QPixmap::fromImage(image);
 
-    // 遍历图片像素，并将每个像素转换为点云中的一个点
-    for (int y = 0; y < height; ++y)
-    {
-        for (int x = 0; x < width; ++x)
-        {
-            QRgb pixelColor = image.pixel(x, y);
+    // 获取 label_34 的大小
+    int labelWidth = ui->resultImg->width();
+    int labelHeight = ui->resultImg->height();
 
-            pcl::PointXYZRGB point;
-            point.x = static_cast<float>(x);
-            point.y = static_cast<float>(y);
-            point.z = 0.0;  // 你可能需要更复杂的深度计算逻辑
+    // 调整 QPixmap 的大小以适应 label_34
+    QPixmap scaledPixmap = pixmap.scaled(labelWidth, labelHeight, Qt::KeepAspectRatio);
 
-            // 从 QRgb 中提取颜色值
-            point.r = qRed(pixelColor);
-            point.g = qGreen(pixelColor);
-            point.b = qBlue(pixelColor);
+    // 在 QLabel 中显示调整大小后的 QPixmap
+    ui->resultImg->setPixmap(scaledPixmap);
 
-            // 添加点到点云
-            cloud->push_back(point);
-        }
-    }
 }
