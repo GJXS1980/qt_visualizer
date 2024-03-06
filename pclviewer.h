@@ -9,6 +9,21 @@
 #include <pcl/point_cloud.h>
 #include <pcl/point_types.h>
 #include <pcl/visualization/pcl_visualizer.h>
+#include <pcl/io/ply_io.h>
+
+#include <vtkSmartPointer.h>
+#include <vtkPNGReader.h>
+#include <vtkImageViewer2.h>
+#include <vtkRenderWindow.h>
+#include <vtkRenderer.h>
+#include <vtkRenderWindowInteractor.h>
+#include <vtkRendererCollection.h>
+#include <QApplication>
+#include <QVBoxLayout>
+#include <QWidget>
+#include <QPixmap>
+#include <QImageReader>
+
 
 typedef pcl::PointXYZRGBA PointT;
 typedef pcl::PointCloud<PointT> PointCloudT;
@@ -27,29 +42,29 @@ public:
   ~PCLViewer ();
 
 public Q_SLOTS:
-  void
-  randomButtonPressed ();
+  void randomButtonPressed ();
 
-  void
-  RGBsliderReleased ();
+  void RGBsliderReleased ();
 
-  void
-  pSliderValueChanged (int value);
+  void pSliderValueChanged (int value);
 
-  void
-  redSliderValueChanged (int value);
+  void redSliderValueChanged (int value);
 
-  void
-  greenSliderValueChanged (int value);
+  void greenSliderValueChanged (int value);
 
-  void
-  blueSliderValueChanged (int value);
+  void blueSliderValueChanged (int value);
+
+  void ImagViewer();
+
+  void convertImageToPointCloud(const QImage &image, pcl::PointCloud<pcl::PointXYZRGB>::Ptr &cloud);
 
 protected:
   void
   refreshView();
 
   pcl::visualization::PCLVisualizer::Ptr viewer;
+  pcl::visualization::PCLVisualizer::Ptr viewerPointClound;
+  pcl::visualization::PCLVisualizer::Ptr viewerColorImg;
   PointCloudT::Ptr cloud;
 
   unsigned int red;

@@ -274,7 +274,7 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:20pt; font-weight:600; color:#729fcf;&quot;&gt;深度学习结果&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
     </widget>
-    <widget class="PCLQVTKWidget" name="qvtkWidget_3">
+    <widget class="PCLQVTKWidget" name="qvtkImagWidget">
      <property name="geometry">
       <rect>
        <x>10</x>
@@ -355,7 +355,7 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:20pt; font-weight:600; color:#1596d9;&quot;&gt;点云结果&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
     </widget>
-    <widget class="PCLQVTKWidget" name="qvtkWidget_2">
+    <widget class="PCLQVTKWidget" name="qvtkPointWidget">
      <property name="geometry">
       <rect>
        <x>30</x>

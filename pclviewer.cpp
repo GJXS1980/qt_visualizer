@@ -4,7 +4,7 @@
 #include <opencv2/opencv.hpp>
 #include "area_scan_3d_camera/Camera.h"
 #include "area_scan_3d_camera/api_util.h"
-#include <pcl/io/ply_io.h>
+
 
 #if VTK_MAJOR_VERSION > 8
 #include <vtkGenericOpenGLRenderWindow.h>
@@ -24,60 +24,81 @@ PCLViewer::PCLViewer (QWidget *parent) :
   // The number of points in the cloud
   cloud->resize (200);
 
-  // The default color
-  red   = 128;
-  green = 128;
-  blue  = 128;
-
-  // Fill the cloud with some points
-  for (auto& point: *cloud)
-  {
-    point.x = 1024 * rand () / (RAND_MAX + 1.0f);
-    point.y = 1024 * rand () / (RAND_MAX + 1.0f);
-    point.z = 1024 * rand () / (RAND_MAX + 1.0f);
-
-    point.r = red;
-    point.g = green;
-    point.b = blue;
-  }
 
   // Set up the QVTK window  
 #if VTK_MAJOR_VERSION > 8
   auto renderer = vtkSmartPointer<vtkRenderer>::New();
   auto renderWindow = vtkSmartPointer<vtkGenericOpenGLRenderWindow>::New();
   renderWindow->AddRenderer(renderer);
+
   viewer.reset(new pcl::visualization::PCLVisualizer(renderer, renderWindow, "viewer", false));
   ui->qvtkWidget->setRenderWindow(viewer->getRenderWindow());
   viewer->setupInteractor(ui->qvtkWidget->interactor(), ui->qvtkWidget->renderWindow());
+
+  auto renderer1 = vtkSmartPointer<vtkRenderer>::New();
+  auto renderWindow1 = vtkSmartPointer<vtkGenericOpenGLRenderWindow>::New();
+  renderWindow1->AddRenderer(renderer1);
+
+  viewerPointClound.reset(new pcl::visualization::PCLVisualizer(renderer1, renderWindow1, "PointCloundviewer", false));
+  ui->qvtkPointWidget->setRenderWindow(viewerPointClound->getRenderWindow());
+  viewerPointClound->setupInteractor(ui->qvtkPointWidget->interactor(), ui->qvtkPointWidget->renderWindow());
+
+
+  // 使用 VTK 中的 PNG 读取器 qvtkImagWidget
+  auto Imgrenderer = vtkSmartPointer<vtkRenderer>::New();
+  auto ImgrenderWindow = vtkSmartPointer<vtkGenericOpenGLRenderWindow>::New();
+  ImgrenderWindow->AddRenderer(Imgrenderer);
+
+  viewerColorImg.reset(new pcl::visualization::PCLVisualizer(Imgrenderer, ImgrenderWindow, "Imgviewer", false));
+  ui->qvtkImagWidget->setRenderWindow(viewerColorImg->getRenderWindow());
+  viewerColorImg->setupInteractor(ui->qvtkImagWidget->interactor(), ui->qvtkImagWidget->renderWindow());
+
+
 #else
   viewer.reset(new pcl::visualization::PCLVisualizer("viewer", false));
   ui->qvtkWidget->SetRenderWindow(viewer->getRenderWindow());
   viewer->setupInteractor(ui->qvtkWidget->GetInteractor(), ui->qvtkWidget->GetRenderWindow());
+
+  viewerPointClound.reset(new pcl::visualization::PCLVisualizer("PointCloundviewer", false));
+  ui->qvtkPointWidget->SetRenderWindow(viewerPointClound->getRenderWindow());
+  viewerPointClound->setupInteractor(ui->qvtkPointWidget->GetInteractor(), ui->qvtkPointWidget->GetRenderWindow());
+
 #endif
 
   // Connect "random" button and the function
   connect (ui->pushButton_random,  SIGNAL (clicked ()), this, SLOT (randomButtonPressed ()));
 
-  // Connect R,G,B sliders and their functions
-  connect (ui->horizontalSlider_R, SIGNAL (valueChanged (int)), this, SLOT (redSliderValueChanged (int)));
-  connect (ui->horizontalSlider_G, SIGNAL (valueChanged (int)), this, SLOT (greenSliderValueChanged (int)));
-  connect (ui->horizontalSlider_B, SIGNAL (valueChanged (int)), this, SLOT (blueSliderValueChanged (int)));
-  connect (ui->horizontalSlider_R, SIGNAL (sliderReleased ()), this, SLOT (RGBsliderReleased ()));
-  connect (ui->horizontalSlider_G, SIGNAL (sliderReleased ()), this, SLOT (RGBsliderReleased ()));
-  connect (ui->horizontalSlider_B, SIGNAL (sliderReleased ()), this, SLOT (RGBsliderReleased ()));
+//  // Connect R,G,B sliders and their functions
+//  connect (ui->horizontalSlider_R, SIGNAL (valueChanged (int)), this, SLOT (redSliderValueChanged (int)));
+//  connect (ui->horizontalSlider_G, SIGNAL (valueChanged (int)), this, SLOT (greenSliderValueChanged (int)));
+//  connect (ui->horizontalSlider_B, SIGNAL (valueChanged (int)), this, SLOT (blueSliderValueChanged (int)));
+//  connect (ui->horizontalSlider_R, SIGNAL (sliderReleased ()), this, SLOT (RGBsliderReleased ()));
+//  connect (ui->horizontalSlider_G, SIGNAL (sliderReleased ()), this, SLOT (RGBsliderReleased ()));
+//  connect (ui->horizontalSlider_B, SIGNAL (sliderReleased ()), this, SLOT (RGBsliderReleased ()));
 
   // Connect point size slider
-  connect (ui->horizontalSlider_p, SIGNAL (valueChanged (int)), this, SLOT (pSliderValueChanged (int)));
+//  connect (ui->horizontalSlider_p, SIGNAL (valueChanged (int)), this, SLOT (pSliderValueChanged (int)));
 
   viewer->addPointCloud (cloud, "cloud");
-  pSliderValueChanged (2);
+  viewerPointClound->addPointCloud (cloud, "cloud");
+//  pSliderValueChanged (2);
+   viewerPointClound->resetCamera ();
   viewer->resetCamera ();
   
   refreshView();
+
 }
 
+
+/**
+ * @brief 连接相机并获取彩色图、深度图像和点云，并作可视化显示
+ *
+ * @param None
+ * @return None
+ */
 void PCLViewer::randomButtonPressed ()
 {
+
   // 搜索相机列表
   std::cout << "Discovering all available cameras..." << std::endl;
   std::vector<mmind::eye::CameraInfo> cameraInfoList = mmind::eye::Camera::discoverCameras();
@@ -151,31 +172,44 @@ try
     pcl::PointCloud<pcl::PointXYZRGB>::Ptr cloud(new pcl::PointCloud<pcl::PointXYZRGB>);
     pcl::io::loadPLYFile<pcl::PointXYZRGB>("TexturedPointCloud.ply", *cloud);
 
+    // Load the point cloud from file
+    pcl::PointCloud<pcl::PointXYZRGB>::Ptr cloud1(new pcl::PointCloud<pcl::PointXYZRGB>);
+    pcl::io::loadPLYFile<pcl::PointXYZRGB>("TexturedPointCloudWithNormals.ply", *cloud1);
+
     // Update the PCL viewer with the new point cloud
     viewer->removePointCloud("cloud");
+    viewerPointClound->removePointCloud("cloud");
+
     viewer->addPointCloud(cloud, "cloud");
+    viewerPointClound->addPointCloud(cloud1, "cloud");
+
     viewer->resetCamera();
-    viewer->updatePointCloud (cloud, "cloud");
+    viewerPointClound->resetCamera();
+
+
+//    // 读取图片
+    QImageReader Imgreader("2DColorImage.png");
+    // 转换 QImage 到 QPixmap
+    QImage image = Imgreader.read();
+
+    pcl::PointCloud<pcl::PointXYZRGB>::Ptr cloud2(new pcl::PointCloud<pcl::PointXYZRGB>);
+    convertImageToPointCloud(image, cloud2);
+    viewerColorImg->addPointCloud(cloud, "image_cloud");
+    viewerColorImg->setPointCloudRenderingProperties(pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 1, "image_cloud");
+    viewerColorImg->setPointCloudRenderingProperties(pcl::visualization::PCL_VISUALIZER_OPACITY, 0.8, "image_cloud");
+
+
     refreshView();
+
+
+
+
   }
 } catch (const std::exception& e) 
 {
     std::cerr << "Exception caught: " << e.what() << std::endl;
     // 处理异常的代码
 }
-
-  printf ("Random button was pressed\n");
-
-//  // Set the new color
-//  for (auto& point: *cloud)
-//  {
-//    point.r = 255 *(1024 * rand () / (RAND_MAX + 1.0f));
-//    point.g = 255 *(1024 * rand () / (RAND_MAX + 1.0f));
-//    point.b = 255 *(1024 * rand () / (RAND_MAX + 1.0f));
-//  }
-
-//  viewer->updatePointCloud (cloud, "cloud");
-//  refreshView();
 }
 
 void PCLViewer::RGBsliderReleased ()
@@ -197,12 +231,25 @@ void PCLViewer::pSliderValueChanged (int value)
   refreshView();
 }
 
+
+/**
+ * @brief 更新点云可视化界面
+ *
+ * @param None
+ * @return None
+ */
 void PCLViewer::refreshView()
 {
 #if VTK_MAJOR_VERSION > 8
   ui->qvtkWidget->renderWindow()->Render();
+  ui->qvtkPointWidget->renderWindow()->Render();
+  ui->qvtkImagWidget->renderWindow()->Render();
 #else
   ui->qvtkWidget->update();
+  ui->qvtkPointWidget->update();
+  ui->qvtkImagWidget->update();
+
+
 #endif
 }
 
@@ -227,4 +274,92 @@ void PCLViewer::blueSliderValueChanged (int value)
 PCLViewer::~PCLViewer ()
 {
   delete ui;
+}
+
+
+void PCLViewer::ImagViewer ()
+{
+
+
+
+//void displayImage(const QString &imagePath, vtkSmartPointer<vtkRenderer> renderer, pcl::visualization::PCLVisualizer::Ptr pclViewer, QVTKWidget *qvtkWidget)
+//{
+//    // 读取图片
+//    QImageReader reader(imagePath);
+//    QImage image = reader.read();
+
+//    // 检查是否成功读取图片
+//    if (image.isNull()) {
+//        qDebug() << "Failed to load image from" << imagePath;
+//        return;
+//    }
+
+//    // 转换 QImage 到 QPixmap
+//    QPixmap pixmap = QPixmap::fromImage(image);
+
+//    // 在 QLabel 中显示 QPixmap
+//    QLabel label;
+//    label.setPixmap(pixmap);
+
+//    // 设置窗口标题
+//    label.setWindowTitle("Image Viewer");
+
+//    // 如果有提供的 VTK 渲染器，将其用于渲染图片
+//    if (renderer) {
+//        vtkSmartPointer<vtkImageActor> imageActor = vtkSmartPointer<vtkImageActor>::New();
+//        imageActor->SetInputData(imageToVtkImageData(image));
+//        renderer->AddActor(imageActor);
+//        renderer->ResetCamera();
+//        qvtkWidget->GetRenderWindow()->Render();
+//    }
+
+//    // 如果有提供的 PCLVisualizer，将图片作为背景显示
+//    if (pclViewer) {
+//        pcl::PointCloud<pcl::PointXYZRGB>::Ptr cloud(new pcl::PointCloud<pcl::PointXYZRGB>);
+//        convertImageToPointCloud(image, cloud);
+//        pclViewer->addPointCloud(cloud, "image_cloud");
+//        pclViewer->setPointCloudRenderingProperties(pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 1, "image_cloud");
+//        pclViewer->setPointCloudRenderingProperties(pcl::visualization::PCL_VISUALIZER_OPACITY, 0.8, "image_cloud");
+//    }
+
+//    // 显示 Qt 窗口
+//    label.show();
+//}
+
+}
+
+
+void PCLViewer::convertImageToPointCloud(const QImage &image, pcl::PointCloud<pcl::PointXYZRGB>::Ptr &cloud)
+{
+    // 根据你的需要实现将 QImage 转换为 PCL 点云的逻辑
+    // 这里只是一个简单的示例，仅用于演示
+
+    // 创建一个点云
+    cloud.reset(new pcl::PointCloud<pcl::PointXYZRGB>);
+
+    // 假设图片大小为 width x height
+    int width = image.width();
+    int height = image.height();
+
+    // 遍历图片像素，并将每个像素转换为点云中的一个点
+    for (int y = 0; y < height; ++y)
+    {
+        for (int x = 0; x < width; ++x)
+        {
+            QRgb pixelColor = image.pixel(x, y);
+
+            pcl::PointXYZRGB point;
+            point.x = static_cast<float>(x);
+            point.y = static_cast<float>(y);
+            point.z = 0.0;  // 你可能需要更复杂的深度计算逻辑
+
+            // 从 QRgb 中提取颜色值
+            point.r = qRed(pixelColor);
+            point.g = qGreen(pixelColor);
+            point.b = qBlue(pixelColor);
+
+            // 添加点到点云
+            cloud->push_back(point);
+        }
+    }
 }
