@@ -46,6 +46,8 @@ public Q_SLOTS:
 
   void DLImagViewer();
   void resultImagViewer();
+  void pointCloundViewer();
+  void workSpaceViewer();
 
 protected:
   void

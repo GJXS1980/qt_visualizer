@@ -25,6 +25,12 @@ PCLViewer::PCLViewer (QWidget *parent) :
   cloud->resize (200);
 
 
+  // 搜索相机列表
+  std::cout << "Discovering all available cameras..." << std::endl;
+  std::vector<mmind::eye::CameraInfo> cameraInfoList = mmind::eye::Camera::discoverCameras();
+
+  int findCamera = 1;
+
   // Set up the QVTK window  
 #if VTK_MAJOR_VERSION > 8
   auto renderer = vtkSmartPointer<vtkRenderer>::New();
@@ -55,15 +61,26 @@ PCLViewer::PCLViewer (QWidget *parent) :
 
 #endif
 
-  // Connect "random" button and the function
+  // 点击运行按钮开始拍照识别
   connect (ui->pushButton_random,  SIGNAL (clicked ()), this, SLOT (randomButtonPressed ()));
 
-  viewer->addPointCloud (cloud, "cloud");
-  viewerPointClound->addPointCloud (cloud, "cloud");
-   viewerPointClound->resetCamera ();
-  viewer->resetCamera ();
-  
-  refreshView();
+  //  搜索相机
+  while (findCamera)
+ {
+      if (cameraInfoList.empty())
+      {
+        throw std::runtime_error("请检测相机连接是否正常.");
+      }
+      else
+      {
+        // 通过ip连接相机
+        mmind::eye::ErrorStatus status = mecheyecamera.connect("192.168.23.15");
+        findCamera = 0;
+      }
+
+
+  }
+
 
 }
 
@@ -76,23 +93,6 @@ PCLViewer::PCLViewer (QWidget *parent) :
  */
 void PCLViewer::randomButtonPressed ()
 {
-
-  // 搜索相机列表
-  std::cout << "Discovering all available cameras..." << std::endl;
-  std::vector<mmind::eye::CameraInfo> cameraInfoList = mmind::eye::Camera::discoverCameras();
-  
-try 
-{
-  //  搜索相机
-  if (cameraInfoList.empty()) 
-  {
-    throw std::runtime_error("No cameras found.");
-  }
-  else
-  {
-    // 通过ip连接相机
-    mmind::eye::ErrorStatus status = mecheyecamera.connect("192.168.23.15");
-
 
     // 获取彩色图像
     mmind::eye::Frame2D frame2D;
@@ -130,7 +130,6 @@ try
     const std::string pointCloudFile = "PointCloud.ply";
     frame3D.saveUntexturedPointCloud(mmind::eye::FileFormat::PLY, pointCloudFile);
 
-
     // 定义获取2D和3D数据
     mmind::eye::Frame2DAnd3D frame2DAnd3D;
     // 采集并获取用于生成2D图、深度图和含法向量的纹理点云的数据
@@ -146,23 +145,10 @@ try
     const std::string texturedPointCloudWithNormalsFile = "TexturedPointCloudWithNormals.ply";
     frame2DAnd3D.saveTexturedPointCloudWithNormals(mmind::eye::FileFormat::PLY, texturedPointCloudWithNormalsFile);
 
-    // Load the point cloud from file
-    pcl::PointCloud<pcl::PointXYZRGB>::Ptr cloud(new pcl::PointCloud<pcl::PointXYZRGB>);
-    pcl::io::loadPLYFile<pcl::PointXYZRGB>("TexturedPointCloud.ply", *cloud);
-
-    // Load the point cloud from file
-    pcl::PointCloud<pcl::PointXYZRGB>::Ptr cloud1(new pcl::PointCloud<pcl::PointXYZRGB>);
-    pcl::io::loadPLYFile<pcl::PointXYZRGB>("TexturedPointCloudWithNormals.ply", *cloud1);
-
-    // Update the PCL viewer with the new point cloud
-    viewer->removePointCloud("cloud");
-    viewerPointClound->removePointCloud("cloud");
-
-    viewer->addPointCloud(cloud, "cloud");
-    viewerPointClound->addPointCloud(cloud1, "cloud");
-
-    viewer->resetCamera();
-    viewerPointClound->resetCamera();
+    // 点云结果可视化界面
+    pointCloundViewer();
+    // 工位可视化界面
+    workSpaceViewer();
 
     // 实例分割图像可视化
     DLImagViewer();
@@ -171,13 +157,6 @@ try
 
     refreshView();
 
-
-  }
-} catch (const std::exception& e) 
-{
-    std::cerr << "Exception caught: " << e.what() << std::endl;
-    // 处理异常的代码
-}
 }
 
 
@@ -192,7 +171,7 @@ void PCLViewer::refreshView()
 #if VTK_MAJOR_VERSION > 8
   ui->qvtkWidget->renderWindow()->Render();
   ui->qvtkPointWidget->renderWindow()->Render();
-//  ui->qvtkImagWidget->renderWindow()->Render();
+
 #else
   ui->qvtkWidget->update();
   ui->qvtkPointWidget->update();
@@ -252,14 +231,54 @@ void PCLViewer::resultImagViewer ()
     // 转换 QImage 到 QPixmap
     QPixmap pixmap = QPixmap::fromImage(image);
 
-    // 获取 label_34 的大小
+    // 获取 resultImg 的大小
     int labelWidth = ui->resultImg->width();
     int labelHeight = ui->resultImg->height();
 
-    // 调整 QPixmap 的大小以适应 label_34
+    // 调整 QPixmap 的大小以适应 resultImg
     QPixmap scaledPixmap = pixmap.scaled(labelWidth, labelHeight, Qt::KeepAspectRatio);
 
     // 在 QLabel 中显示调整大小后的 QPixmap
     ui->resultImg->setPixmap(scaledPixmap);
 
 }
+
+/**
+ * @brief 点云结果可视化界面
+ *
+ * @param None
+ * @return None
+ */
+void PCLViewer::pointCloundViewer ()
+{
+
+    // 加载点云
+    pcl::PointCloud<pcl::PointXYZRGB>::Ptr cloud(new pcl::PointCloud<pcl::PointXYZRGB>);
+    pcl::io::loadPLYFile<pcl::PointXYZRGB>("TexturedPointCloudWithNormals.ply", *cloud);
+
+    viewerPointClound->removePointCloud("cloud");
+    viewerPointClound->addPointCloud(cloud, "cloud");
+    viewerPointClound->resetCamera();
+
+}
+
+
+/**
+ * @brief 工位可视化界面
+ *
+ * @param None
+ * @return None
+ */
+void PCLViewer::workSpaceViewer ()
+{
+
+    // 加载点云
+    pcl::PointCloud<pcl::PointXYZRGB>::Ptr cloud(new pcl::PointCloud<pcl::PointXYZRGB>);
+    pcl::io::loadPLYFile<pcl::PointXYZRGB>("TexturedPointCloud.ply", *cloud);
+
+    // Update the PCL viewer with the new point cloud
+    viewer->removePointCloud("cloud");
+    viewer->addPointCloud(cloud, "cloud");
+    viewer->resetCamera();
+}
+
