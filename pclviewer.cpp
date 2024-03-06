@@ -4,6 +4,7 @@
 #include <opencv2/opencv.hpp>
 #include "area_scan_3d_camera/Camera.h"
 #include "area_scan_3d_camera/api_util.h"
+#include <pcl/io/ply_io.h>
 
 #if VTK_MAJOR_VERSION > 8
 #include <vtkGenericOpenGLRenderWindow.h>
@@ -91,7 +92,7 @@ try
   else
   {
     // 通过ip连接相机
-    mmind::eye::ErrorStatus status = mecheyecamera.connect("192.168.23.10");
+    mmind::eye::ErrorStatus status = mecheyecamera.connect("192.168.23.15");
 
 
     // 获取彩色图像
@@ -146,6 +147,16 @@ try
     const std::string texturedPointCloudWithNormalsFile = "TexturedPointCloudWithNormals.ply";
     frame2DAnd3D.saveTexturedPointCloudWithNormals(mmind::eye::FileFormat::PLY, texturedPointCloudWithNormalsFile);
 
+    // Load the point cloud from file
+    pcl::PointCloud<pcl::PointXYZRGB>::Ptr cloud(new pcl::PointCloud<pcl::PointXYZRGB>);
+    pcl::io::loadPLYFile<pcl::PointXYZRGB>("TexturedPointCloud.ply", *cloud);
+
+    // Update the PCL viewer with the new point cloud
+    viewer->removePointCloud("cloud");
+    viewer->addPointCloud(cloud, "cloud");
+    viewer->resetCamera();
+    viewer->updatePointCloud (cloud, "cloud");
+    refreshView();
   }
 } catch (const std::exception& e) 
 {
@@ -155,16 +166,16 @@ try
 
   printf ("Random button was pressed\n");
 
-  // Set the new color
-  for (auto& point: *cloud)
-  {
-    point.r = 255 *(1024 * rand () / (RAND_MAX + 1.0f));
-    point.g = 255 *(1024 * rand () / (RAND_MAX + 1.0f));
-    point.b = 255 *(1024 * rand () / (RAND_MAX + 1.0f));
-  }
+//  // Set the new color
+//  for (auto& point: *cloud)
+//  {
+//    point.r = 255 *(1024 * rand () / (RAND_MAX + 1.0f));
+//    point.g = 255 *(1024 * rand () / (RAND_MAX + 1.0f));
+//    point.b = 255 *(1024 * rand () / (RAND_MAX + 1.0f));
+//  }
 
-  viewer->updatePointCloud (cloud, "cloud");
-  refreshView();
+//  viewer->updatePointCloud (cloud, "cloud");
+//  refreshView();
 }
 
 void PCLViewer::RGBsliderReleased ()
