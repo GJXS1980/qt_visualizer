@@ -175,7 +175,7 @@ void PCLViewer::refreshView()
 #else
   ui->qvtkWidget->update();
   ui->qvtkPointWidget->update();
-  ui->qvtkImagWidget->update();
+//  ui->qvtkImagWidget->update();
 
 
 #endif
