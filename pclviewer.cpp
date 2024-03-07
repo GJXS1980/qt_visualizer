@@ -25,6 +25,15 @@ PCLViewer::PCLViewer (QWidget *parent) :
   cloud->resize (200);
 
 
+  // 创建一个 QTimer 用于定时更新时间
+  QTimer *timer = new QTimer(this);
+  connect(timer, &QTimer::timeout, this, &PCLViewer::updateTime);
+  timer->start(1000);  // 每秒更新一次
+  // 初始化时间显示
+  updateTime();
+
+
+
   // 搜索相机列表
   std::cout << "Discovering all available cameras..." << std::endl;
   std::vector<mmind::eye::CameraInfo> cameraInfoList = mmind::eye::Camera::discoverCameras();
@@ -100,17 +109,14 @@ void PCLViewer::randomButtonPressed ()
     mmind::eye::Color2DImage colorImage = frame2DAnd3D.frame2D().getColorImage();
     cv::Mat color8UC3 = cv::Mat(colorImage.height(), colorImage.width(), CV_8UC3, colorImage.data());
     cv::imwrite(imageColorFile, color8UC3);
-    //std::cout << "Capture and save the 2D image: " << imageColorFile << std::endl;
 
     const std::string depthImgFile = "DepthMap.tiff";
     mmind::eye::DepthMap depthMap = frame2DAnd3D.frame3D().getDepthMap();
     cv::Mat depth32F = cv::Mat(depthMap.height(), depthMap.width(), CV_32FC1, depthMap.data());
     cv::imwrite(depthImgFile, depth32F);
-    //std::cout << "Capture and save the depth map: " << depthImgFile << std::endl;
 
    const std::string UntexturedPointCloudFile = "UntexturedPointCloud.ply";
     showError(frame2DAnd3D.frame3D().saveUntexturedPointCloud(mmind::eye::FileFormat::PLY, UntexturedPointCloudFile));
-    //std::cout << "Capture and save the untextured point cloud: " << UntexturedPointCloudFile << std::endl;
 
     const std::string texturedPointCloudFile = "TexturedPointCloud.ply";
     showError(frame2DAnd3D.saveTexturedPointCloud(mmind::eye::FileFormat::PLY, texturedPointCloudFile));
@@ -243,7 +249,7 @@ void PCLViewer::workSpaceViewer ()
 
     // 加载点云
     pcl::PointCloud<pcl::PointXYZRGB>::Ptr cloud(new pcl::PointCloud<pcl::PointXYZRGB>);
-    pcl::io::loadPLYFile<pcl::PointXYZRGB>("UntexturedPointCloud.ply", *cloud);
+    pcl::io::loadPLYFile<pcl::PointXYZRGB>("TexturedPointCloud.ply", *cloud);
 
     // Update the PCL viewer with the new point cloud
     viewer->removePointCloud("cloud");
@@ -265,3 +271,24 @@ void PCLViewer::exitViewer ()
     // 执行退出操作
     qApp->quit();
 }
+
+
+
+/**
+ * @brief 更新时间的槽函数
+ *
+ * @param None
+ * @return None
+ */
+void PCLViewer::updateTime()
+{
+    QDateTime currentDateTime = QDateTime::currentDateTime();
+    // 显示时间
+    QString formattedTime = currentDateTime.toString("yyyy年MM月dd hh:mm:ss");
+    ui->timeLabel->setText(formattedTime);
+}
+
+
+
+
+

@@ -23,7 +23,9 @@
 #include <QWidget>
 #include <QPixmap>
 #include <QImageReader>
-
+#include <QDateTime>
+#include <QTimer>
+#include <QThread>
 
 typedef pcl::PointXYZRGBA PointT;
 typedef pcl::PointCloud<PointT> PointCloudT;
@@ -49,6 +51,8 @@ public Q_SLOTS:
   void pointCloundViewer();
   void workSpaceViewer();
   void exitViewer();
+  void updateTime();
+
 protected:
   void
   refreshView();
@@ -59,4 +63,32 @@ protected:
 
 private:
   Ui::PCLViewer *ui;
+};
+
+
+// 定义一个 WorkerThread 类，用于在单独的线程中获取系统时间
+class WorkerThread : public QThread
+{
+    Q_OBJECT
+
+signals:
+    void updateTimeSignal(const QString &currentTime);
+
+protected:
+    // 在 QThread 的 run() 函数中执行线程任务
+    void run() override
+    {
+        while (!isInterruptionRequested())
+        {
+            // 获取系统时间
+            QDateTime currentDateTime = QDateTime::currentDateTime();
+            QString formattedDateTime = currentDateTime.toString("yyyy-MM-dd hh:mm:ss");
+
+            // 发送信号通知主线程更新时间
+            emit updateTimeSignal(formattedDateTime);
+
+            // 等待一秒
+            sleep(1);
+        }
+    }
 };
