@@ -78,9 +78,7 @@ PCLViewer::PCLViewer (QWidget *parent) :
         mmind::eye::ErrorStatus status = mecheyecamera.connect("192.168.23.15");
         findCamera = 0;
       }
-
   }
-
 
 }
 
@@ -93,57 +91,30 @@ PCLViewer::PCLViewer (QWidget *parent) :
  */
 void PCLViewer::randomButtonPressed ()
 {
-
-    // 获取彩色图像
-    mmind::eye::Frame2D frame2D;
-    cv::Mat image2D;
-
-    mecheyecamera.capture2D(frame2D);
-
-    // 保存图像
-    const std::string imageColorFile = "2DColorImage.png";
-    switch (frame2D.colorType()) 
-    {
-        case mmind::eye::ColorTypeOf2DCamera::Monochrome:
-        {
-            mmind::eye::GrayScale2DImage grayImage = frame2D.getGrayScaleImage();
-            image2D = cv::Mat(grayImage.height(), grayImage.width(), CV_8UC1, grayImage.data());
-        }
-        case mmind::eye::ColorTypeOf2DCamera::Color:
-        {
-            mmind::eye::Color2DImage colorImage = frame2D.getColorImage();
-            image2D = cv::Mat(colorImage.height(), colorImage.width(), CV_8UC3, colorImage.data());
-        }
-    }
-    cv::imwrite(imageColorFile, image2D);
-
-    // 获取深度图像和点云
-    mmind::eye::Frame3D frame3D;
-    mecheyecamera.capture3D(frame3D);
-    mmind::eye::DepthMap depthMap = frame3D.getDepthMap();
-    // 保存深度图
-    cv::Mat depth32F = cv::Mat(depthMap.height(), depthMap.width(), CV_32FC1, depthMap.data());
-    const std::string depthImgFile = "DepthMap.tiff";
-    cv::imwrite(depthImgFile, depth32F);
-
-    // 保存黑白点云
-    const std::string pointCloudFile = "PointCloud.ply";
-    frame3D.saveUntexturedPointCloud(mmind::eye::FileFormat::PLY, pointCloudFile);
-
-    // 定义获取2D和3D数据
     mmind::eye::Frame2DAnd3D frame2DAnd3D;
-    // 采集并获取用于生成2D图、深度图和含法向量的纹理点云的数据
-    mecheyecamera.capture2DAnd3DWithNormal(frame2DAnd3D);
+    showError(mecheyecamera.capture2DAnd3D(frame2DAnd3D));
 
-    // 保存彩色点云
+    //  保存彩色图像
+    const std::string imageColorFile = "2DColorImage.png";
+    // Save the obtained data with the set filenames.
+    mmind::eye::Color2DImage colorImage = frame2DAnd3D.frame2D().getColorImage();
+    cv::Mat color8UC3 = cv::Mat(colorImage.height(), colorImage.width(), CV_8UC3, colorImage.data());
+    cv::imwrite(imageColorFile, color8UC3);
+    //std::cout << "Capture and save the 2D image: " << imageColorFile << std::endl;
+
+    const std::string depthImgFile = "DepthMap.tiff";
+    mmind::eye::DepthMap depthMap = frame2DAnd3D.frame3D().getDepthMap();
+    cv::Mat depth32F = cv::Mat(depthMap.height(), depthMap.width(), CV_32FC1, depthMap.data());
+    cv::imwrite(depthImgFile, depth32F);
+    //std::cout << "Capture and save the depth map: " << depthImgFile << std::endl;
+
+   const std::string UntexturedPointCloudFile = "UntexturedPointCloud.ply";
+    showError(frame2DAnd3D.frame3D().saveUntexturedPointCloud(mmind::eye::FileFormat::PLY, UntexturedPointCloudFile));
+    //std::cout << "Capture and save the untextured point cloud: " << UntexturedPointCloudFile << std::endl;
+
     const std::string texturedPointCloudFile = "TexturedPointCloud.ply";
-    frame2DAnd3D.saveTexturedPointCloud(mmind::eye::FileFormat::PLY, texturedPointCloudFile);
-
-    // 获取带法向量的纹理点云
-    mmind::eye::TexturedPointCloudWithNormals texturedpointcloudwithnormals = frame2DAnd3D.getTexturedPointCloudWithNormals();
-    // 保存带法向量纹理点云
-    const std::string texturedPointCloudWithNormalsFile = "TexturedPointCloudWithNormals.ply";
-    frame2DAnd3D.saveTexturedPointCloudWithNormals(mmind::eye::FileFormat::PLY, texturedPointCloudWithNormalsFile);
+    showError(frame2DAnd3D.saveTexturedPointCloud(mmind::eye::FileFormat::PLY, texturedPointCloudFile));
+    //std::cout << "Capture and save the textured point cloud: " << texturedPointCloudFile << std::endl;
 
     // 点云结果可视化界面
     pointCloundViewer();
@@ -175,8 +146,6 @@ void PCLViewer::refreshView()
 #else
   ui->qvtkWidget->update();
   ui->qvtkPointWidget->update();
-//  ui->qvtkImagWidget->update();
-
 
 #endif
 }
@@ -254,7 +223,7 @@ void PCLViewer::pointCloundViewer ()
 
     // 加载点云
     pcl::PointCloud<pcl::PointXYZRGB>::Ptr cloud(new pcl::PointCloud<pcl::PointXYZRGB>);
-    pcl::io::loadPLYFile<pcl::PointXYZRGB>("TexturedPointCloudWithNormals.ply", *cloud);
+    pcl::io::loadPLYFile<pcl::PointXYZRGB>("TexturedPointCloud.ply", *cloud);
 
     viewerPointClound->removePointCloud("cloud");
     viewerPointClound->addPointCloud(cloud, "cloud");
@@ -274,7 +243,7 @@ void PCLViewer::workSpaceViewer ()
 
     // 加载点云
     pcl::PointCloud<pcl::PointXYZRGB>::Ptr cloud(new pcl::PointCloud<pcl::PointXYZRGB>);
-    pcl::io::loadPLYFile<pcl::PointXYZRGB>("TexturedPointCloud.ply", *cloud);
+    pcl::io::loadPLYFile<pcl::PointXYZRGB>("UntexturedPointCloud.ply", *cloud);
 
     // Update the PCL viewer with the new point cloud
     viewer->removePointCloud("cloud");
