@@ -478,7 +478,7 @@ p, li { white-space: pre-wrap; }
     <property name="frameShadow">
      <enum>QFrame::Raised</enum>
     </property>
-    <widget class="QPushButton" name="pushButton_random">
+    <widget class="QPushButton" name="runButton">
      <property name="geometry">
       <rect>
        <x>60</x>
@@ -1498,7 +1498,7 @@ font: 75 11pt &quot;Ubuntu Condensed&quot;;</string>
      <enum>QFrame::Raised</enum>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_random_6">
+   <widget class="QPushButton" name="exitButton">
     <property name="geometry">
      <rect>
       <x>1860</x>
@@ -1544,7 +1544,7 @@ font: 75 11pt &quot;Ubuntu Condensed&quot;;</string>
    <zorder>frame_12</zorder>
    <zorder>frame_13</zorder>
    <zorder>frame_5</zorder>
-   <zorder>pushButton_random_6</zorder>
+   <zorder>exitButton</zorder>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
  </widget>

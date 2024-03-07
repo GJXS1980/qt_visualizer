@@ -48,7 +48,7 @@ public Q_SLOTS:
   void resultImagViewer();
   void pointCloundViewer();
   void workSpaceViewer();
-
+  void exitViewer();
 protected:
   void
   refreshView();

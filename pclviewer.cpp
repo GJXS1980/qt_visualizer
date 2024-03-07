@@ -62,8 +62,9 @@ PCLViewer::PCLViewer (QWidget *parent) :
 #endif
 
   // 点击运行按钮开始拍照识别
-  connect (ui->pushButton_random,  SIGNAL (clicked ()), this, SLOT (randomButtonPressed ()));
-
+  connect (ui->runButton,  SIGNAL (clicked ()), this, SLOT (randomButtonPressed ()));
+  // 点击退出按钮
+  connect (ui->exitButton,  SIGNAL (clicked ()), this, SLOT (exitViewer ()));
   //  搜索相机
   while (findCamera)
  {
@@ -77,7 +78,6 @@ PCLViewer::PCLViewer (QWidget *parent) :
         mmind::eye::ErrorStatus status = mecheyecamera.connect("192.168.23.15");
         findCamera = 0;
       }
-
 
   }
 
@@ -282,3 +282,17 @@ void PCLViewer::workSpaceViewer ()
     viewer->resetCamera();
 }
 
+/**
+ * @brief 界面退出
+ *
+ * @param None
+ * @return None
+ */
+void PCLViewer::exitViewer ()
+{
+
+    // 断开相机连接
+    mecheyecamera.disconnect();
+    // 执行退出操作
+    qApp->quit();
+}
