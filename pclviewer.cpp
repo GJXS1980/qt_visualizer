@@ -5,15 +5,12 @@
 #include "area_scan_3d_camera/Camera.h"
 #include "area_scan_3d_camera/api_util.h"
 
-
 #if VTK_MAJOR_VERSION > 8
 #include <vtkGenericOpenGLRenderWindow.h>
 #endif
 
 mmind::eye::Camera mecheyecamera;
 bool findCamera = true;
-
-
 
 PCLViewer::PCLViewer (QWidget *parent) :
   QMainWindow (parent),
@@ -79,53 +76,52 @@ PCLViewer::PCLViewer (QWidget *parent) :
 
   // 点击运行按钮开始拍照识别
   connect (ui->runButton,  SIGNAL (clicked ()), this, SLOT (randomButtonPressed ()));
+
   // 点击退出按钮
   connect (ui->exitButton,  SIGNAL (clicked ()), this, SLOT (exitViewer ()));
 
-
   // 搜索相机
   while (findCamera)
-    {
-        if (cameraInfoList.empty())
-        {
-              throw std::runtime_error("请检测相机连接是否正常.");
+  {
+      if (cameraInfoList.empty())
+      {
+          // 相机连接异常，弹窗显示消息
+          QMessageBox::critical(nullptr, "连接异常", "请检测相机连接是否正常.", QMessageBox::Ok);
+          findCamera = false;
+          qApp->quit();
+      }
+      else
+      {
+          // 弹窗输入相机IP
+          bool ok;
+          QString cameraIP = QInputDialog::getText(nullptr, "输入相机IP", "请输入相机IP地址:", QLineEdit::Normal, "", &ok);
+
+          if (!ok || cameraIP.isEmpty())
+          {
+              // 用户取消输入，执行退出操作
+              qApp->quit();
           }
           else
           {
-              // 弹窗输入相机IP
-              bool ok;
-              QString cameraIP = QInputDialog::getText(nullptr, "输入相机IP", "请输入相机IP地址:", QLineEdit::Normal, "", &ok);
+              // 通过IP连接相机
+              mmind::eye::ErrorStatus status = mecheyecamera.connect(cameraIP.toStdString());
 
-              if (!ok || cameraIP.isEmpty())
+              if (status.isOK())
               {
+                  // 连接成功，退出循环
+                  std::cout << "连接成功" << std::endl;
                   findCamera = false;
-//                  // 执行退出操作
-//                  qApp->quit();
-
               }
               else
               {
-                  // 通过IP连接相机
-                  mmind::eye::ErrorStatus status = mecheyecamera.connect(cameraIP.toStdString());
-
-//                  std::cout << "相机状态: " << mmind::eye::ErrorStatus::status << std::endl;
-
-                  if (status.isOK())
-                  {
-                      // 处理连接错误逻辑...
-                      std::cout << " 连接成功"  << std::endl;
-                      findCamera = false;
-                  }
-                  else
-                  {
-                      // 连接成功，退出循环
-                      std::cout << "输入错误，请重新输入！"  << std::endl;
-                      findCamera = true;
-                  }
+                  // 连接错误，弹窗显示消息
+                  QMessageBox::critical(nullptr, "错误", "输入错误，请重新输入！", QMessageBox::Ok);
+                  findCamera = true;
               }
           }
-
       }
+  }
+
 
 }
 
@@ -171,7 +167,6 @@ void PCLViewer::randomButtonPressed ()
     resultImagViewer();
 
     refreshView();
-
 }
 
 
@@ -225,8 +220,8 @@ void PCLViewer::DLImagViewer ()
 
     // 在 QLabel 中显示调整大小后的 QPixmap
     ui->dlImg->setPixmap(scaledPixmap);
-
 }
+
 
 /**
  * @brief 码垛结果可视化界面
@@ -236,7 +231,6 @@ void PCLViewer::DLImagViewer ()
  */
 void PCLViewer::resultImagViewer ()
 {
-
     // 读取图片
     QImageReader Imgreader("2DColorImage.png");
     QImage image = Imgreader.read();
@@ -253,8 +247,8 @@ void PCLViewer::resultImagViewer ()
 
     // 在 QLabel 中显示调整大小后的 QPixmap
     ui->resultImg->setPixmap(scaledPixmap);
-
 }
+
 
 /**
  * @brief 点云结果可视化界面
@@ -264,7 +258,6 @@ void PCLViewer::resultImagViewer ()
  */
 void PCLViewer::pointCloundViewer ()
 {
-
     // 加载点云
     pcl::PointCloud<pcl::PointXYZRGB>::Ptr cloud(new pcl::PointCloud<pcl::PointXYZRGB>);
     pcl::io::loadPLYFile<pcl::PointXYZRGB>("TexturedPointCloud.ply", *cloud);
@@ -272,8 +265,8 @@ void PCLViewer::pointCloundViewer ()
     viewerPointClound->removePointCloud("cloud");
     viewerPointClound->addPointCloud(cloud, "cloud");
     viewerPointClound->resetCamera();
-
 }
+
 
 
 /**
@@ -284,7 +277,6 @@ void PCLViewer::pointCloundViewer ()
  */
 void PCLViewer::workSpaceViewer ()
 {
-
     // 加载点云
     pcl::PointCloud<pcl::PointXYZRGB>::Ptr cloud(new pcl::PointCloud<pcl::PointXYZRGB>);
     pcl::io::loadPLYFile<pcl::PointXYZRGB>("TexturedPointCloud.ply", *cloud);
@@ -295,6 +287,7 @@ void PCLViewer::workSpaceViewer ()
     viewer->resetCamera();
 }
 
+
 /**
  * @brief 界面退出
  *
@@ -303,7 +296,6 @@ void PCLViewer::workSpaceViewer ()
  */
 void PCLViewer::exitViewer ()
 {
-
     // 断开相机连接
     mecheyecamera.disconnect();
     // 执行退出操作

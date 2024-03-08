@@ -14,6 +14,7 @@
 #include <QThread>
 #include <QInputDialog>
 #include <QString>
+#include <QMessageBox>
 
 // Point Cloud Library
 #include <pcl/point_cloud.h>
