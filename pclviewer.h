@@ -4,6 +4,16 @@
 
 // Qt
 #include <QMainWindow>
+#include <QApplication>
+#include <QVBoxLayout>
+#include <QWidget>
+#include <QPixmap>
+#include <QImageReader>
+#include <QDateTime>
+#include <QTimer>
+#include <QThread>
+#include <QInputDialog>
+#include <QString>
 
 // Point Cloud Library
 #include <pcl/point_cloud.h>
@@ -18,14 +28,7 @@
 #include <vtkRenderer.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRendererCollection.h>
-#include <QApplication>
-#include <QVBoxLayout>
-#include <QWidget>
-#include <QPixmap>
-#include <QImageReader>
-#include <QDateTime>
-#include <QTimer>
-#include <QThread>
+
 
 typedef pcl::PointXYZRGBA PointT;
 typedef pcl::PointCloud<PointT> PointCloudT;
@@ -33,6 +36,7 @@ typedef pcl::PointCloud<PointT> PointCloudT;
 namespace Ui
 {
   class PCLViewer;
+  class WorkerThread;
 }
 
 class PCLViewer : public QMainWindow
@@ -40,7 +44,7 @@ class PCLViewer : public QMainWindow
   Q_OBJECT
 
 public:
-  explicit PCLViewer (QWidget *parent = 0);
+  explicit PCLViewer (QWidget *parent = nullptr);
   ~PCLViewer ();
 
 public Q_SLOTS:
@@ -52,10 +56,10 @@ public Q_SLOTS:
   void workSpaceViewer();
   void exitViewer();
   void updateTime();
+  void receiveUpdateTime(const QString &currentTime);
 
 protected:
-  void
-  refreshView();
+  void refreshView();
 
   pcl::visualization::PCLVisualizer::Ptr viewer;
   pcl::visualization::PCLVisualizer::Ptr viewerPointClound;
@@ -82,7 +86,7 @@ protected:
         {
             // 获取系统时间
             QDateTime currentDateTime = QDateTime::currentDateTime();
-            QString formattedDateTime = currentDateTime.toString("yyyy-MM-dd hh:mm:ss");
+            QString formattedDateTime = currentDateTime.toString("yyyy年MM月dd hh:mm:ss");
 
             // 发送信号通知主线程更新时间
             emit updateTimeSignal(formattedDateTime);

@@ -11,6 +11,9 @@
 #endif
 
 mmind::eye::Camera mecheyecamera;
+bool findCamera = true;
+
+
 
 PCLViewer::PCLViewer (QWidget *parent) :
   QMainWindow (parent),
@@ -24,6 +27,14 @@ PCLViewer::PCLViewer (QWidget *parent) :
   // The number of points in the cloud
   cloud->resize (200);
 
+//   WorkerThread *workerThread;
+//  // 创建 WorkerThread 对象
+//  workerThread = new WorkerThread(this);
+//  // 连接工作线程的 updateTimeSignal 信号到主窗口的 receiveUpdateTime 槽函数
+//  connect(workerThread, &WorkerThread::updateTimeSignal, this, &PCLViewer::receiveUpdateTime);
+
+//  // 启动工作线程
+//  workerThread->start();
 
   // 创建一个 QTimer 用于定时更新时间
   QTimer *timer = new QTimer(this);
@@ -32,13 +43,9 @@ PCLViewer::PCLViewer (QWidget *parent) :
   // 初始化时间显示
   updateTime();
 
-
-
   // 搜索相机列表
   std::cout << "Discovering all available cameras..." << std::endl;
   std::vector<mmind::eye::CameraInfo> cameraInfoList = mmind::eye::Camera::discoverCameras();
-
-  int findCamera = 1;
 
   // Set up the QVTK window  
 #if VTK_MAJOR_VERSION > 8
@@ -74,20 +81,51 @@ PCLViewer::PCLViewer (QWidget *parent) :
   connect (ui->runButton,  SIGNAL (clicked ()), this, SLOT (randomButtonPressed ()));
   // 点击退出按钮
   connect (ui->exitButton,  SIGNAL (clicked ()), this, SLOT (exitViewer ()));
-  //  搜索相机
+
+
+  // 搜索相机
   while (findCamera)
- {
-      if (cameraInfoList.empty())
-      {
-        throw std::runtime_error("请检测相机连接是否正常.");
+    {
+        if (cameraInfoList.empty())
+        {
+              throw std::runtime_error("请检测相机连接是否正常.");
+          }
+          else
+          {
+              // 弹窗输入相机IP
+              bool ok;
+              QString cameraIP = QInputDialog::getText(nullptr, "输入相机IP", "请输入相机IP地址:", QLineEdit::Normal, "", &ok);
+
+              if (!ok || cameraIP.isEmpty())
+              {
+                  findCamera = false;
+//                  // 执行退出操作
+//                  qApp->quit();
+
+              }
+              else
+              {
+                  // 通过IP连接相机
+                  mmind::eye::ErrorStatus status = mecheyecamera.connect(cameraIP.toStdString());
+
+//                  std::cout << "相机状态: " << mmind::eye::ErrorStatus::status << std::endl;
+
+                  if (status.isOK())
+                  {
+                      // 处理连接错误逻辑...
+                      std::cout << " 连接成功"  << std::endl;
+                      findCamera = false;
+                  }
+                  else
+                  {
+                      // 连接成功，退出循环
+                      std::cout << "输入错误，请重新输入！"  << std::endl;
+                      findCamera = true;
+                  }
+              }
+          }
+
       }
-      else
-      {
-        // 通过ip连接相机
-        mmind::eye::ErrorStatus status = mecheyecamera.connect("192.168.23.15");
-        findCamera = 0;
-      }
-  }
 
 }
 
@@ -289,6 +327,17 @@ void PCLViewer::updateTime()
 }
 
 
+/**
+ * @brief 更新时间的槽函数
+ *
+ * @param None
+ * @return None
+ */
+void PCLViewer::receiveUpdateTime(const QString &currentTime)
+{
+    // 更新时间显示
+    ui->timeLabel->setText(currentTime);
+}
 
 
 
