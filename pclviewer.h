@@ -34,11 +34,44 @@
 typedef pcl::PointXYZRGBA PointT;
 typedef pcl::PointCloud<PointT> PointCloudT;
 
+// 定义一个 WorkerThread 类，用于在单独的线程中获取系统时间
+class WorkerThread : public QThread
+{
+    Q_OBJECT
+
+public:
+    explicit WorkerThread(QObject* parent = nullptr) : QThread(parent) {}
+
+signals:
+    void updateTimeSignal(const QString &currentTime);
+
+protected:
+    // 在 QThread 的 run() 函数中执行线程任务
+    void run() override
+    {
+        while (!isInterruptionRequested())
+        {
+            // 获取系统时间
+            QDateTime currentDateTime = QDateTime::currentDateTime();
+            QString formattedDateTime = currentDateTime.toString("yyyy年MM月dd hh:mm:ss");
+
+            // 发送信号通知主线程更新时间
+            emit updateTimeSignal(formattedDateTime);
+
+            // 等待一秒
+            sleep(1);
+        }
+    }
+};
+
+
 namespace Ui
 {
   class PCLViewer;
   class WorkerThread;
 }
+
+
 
 class PCLViewer : public QMainWindow
 {
@@ -68,32 +101,9 @@ protected:
 
 private:
   Ui::PCLViewer *ui;
+  WorkerThread *workerthread;
 };
 
 
-// 定义一个 WorkerThread 类，用于在单独的线程中获取系统时间
-class WorkerThread : public QThread
-{
-    Q_OBJECT
 
-signals:
-    void updateTimeSignal(const QString &currentTime);
 
-protected:
-    // 在 QThread 的 run() 函数中执行线程任务
-    void run() override
-    {
-        while (!isInterruptionRequested())
-        {
-            // 获取系统时间
-            QDateTime currentDateTime = QDateTime::currentDateTime();
-            QString formattedDateTime = currentDateTime.toString("yyyy年MM月dd hh:mm:ss");
-
-            // 发送信号通知主线程更新时间
-            emit updateTimeSignal(formattedDateTime);
-
-            // 等待一秒
-            sleep(1);
-        }
-    }
-};

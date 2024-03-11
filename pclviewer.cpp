@@ -22,12 +22,16 @@ PCLViewer::PCLViewer (QWidget *parent) : QMainWindow (parent), ui (new Ui::PCLVi
   // The number of points in the cloud
   cloud->resize (200);
 
-  // 创建一个 QTimer 用于定时更新时间
-  QTimer *timer = new QTimer(this);
-  connect(timer, &QTimer::timeout, this, &PCLViewer::updateTime);
-  timer->start(1000);  // 每秒更新一次
-  // 初始化时间显示
-  updateTime();
+//  // 创建一个 QTimer 用于定时更新时间
+//  QTimer *timer = new QTimer(this);
+//  connect(timer, &QTimer::timeout, this, &PCLViewer::updateTime);
+//  timer->start(1000);  // 每秒更新一次
+//  // 初始化时间显示
+//  updateTime();
+
+  workerthread = new WorkerThread(this);
+  connect(workerthread, &WorkerThread::updateTimeSignal, this, &PCLViewer::receiveUpdateTime);
+  workerthread->start();
 
   // 搜索相机列表
   std::cout << "Discovering all available cameras..." << std::endl;
