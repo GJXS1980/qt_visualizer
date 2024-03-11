@@ -12,9 +12,7 @@
 mmind::eye::Camera mecheyecamera;
 bool findCamera = true;
 
-PCLViewer::PCLViewer (QWidget *parent) :
-  QMainWindow (parent),
-  ui (new Ui::PCLViewer)
+PCLViewer::PCLViewer (QWidget *parent) : QMainWindow (parent), ui (new Ui::PCLViewer)
 {
   ui->setupUi (this);
   this->setWindowTitle ("隆深智能装箱系统");
@@ -23,15 +21,6 @@ PCLViewer::PCLViewer (QWidget *parent) :
   cloud.reset (new PointCloudT);
   // The number of points in the cloud
   cloud->resize (200);
-
-//   WorkerThread *workerThread;
-//  // 创建 WorkerThread 对象
-//  workerThread = new WorkerThread(this);
-//  // 连接工作线程的 updateTimeSignal 信号到主窗口的 receiveUpdateTime 槽函数
-//  connect(workerThread, &WorkerThread::updateTimeSignal, this, &PCLViewer::receiveUpdateTime);
-
-//  // 启动工作线程
-//  workerThread->start();
 
   // 创建一个 QTimer 用于定时更新时间
   QTimer *timer = new QTimer(this);
@@ -121,7 +110,6 @@ PCLViewer::PCLViewer (QWidget *parent) :
           }
       }
   }
-
 
 }
 

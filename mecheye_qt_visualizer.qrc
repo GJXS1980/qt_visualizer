@@ -15,6 +15,7 @@
     <file>hardware_virtualcamera.png</file>
     <file>project_stopped.png</file>
     <file>step_warning.png</file>
+    <file>icon.png</file>
 
   </qresource>
 </RCC>

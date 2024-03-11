@@ -108,35 +108,6 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:28pt; color:#ef2929;&quot;&gt;隆深智能装箱系统&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_5">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>0</y>
-      <width>341</width>
-      <height>71</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>Ubuntu Condensed</family>
-      <weight>75</weight>
-      <bold>true</bold>
-     </font>
-    </property>
-    <property name="mouseTracking">
-     <bool>true</bool>
-    </property>
-    <property name="tabletTracking">
-     <bool>true</bool>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-    <property name="pixmap">
-     <pixmap resource="mecheye_qt_visualizer.qrc">:/home/grantli/qt_ws/demo/QtMecheyeCamera/mecheye_qt_visualizer/resource/images/navLogo.png</pixmap>
-    </property>
-   </widget>
    <widget class="QFrame" name="frame">
     <property name="geometry">
      <rect>
@@ -311,7 +282,7 @@ p, li { white-space: pre-wrap; }
       <bool>false</bool>
      </property>
      <property name="autoFillBackground">
-      <bool>true</bool>
+      <bool>false</bool>
      </property>
      <property name="styleSheet">
       <string notr="true">background-color: rgb(246, 245, 244);</string>
@@ -872,127 +843,13 @@ font: 75 11pt &quot;Ubuntu Condensed&quot;;</string>
     <property name="frameShadow">
      <enum>QFrame::Raised</enum>
     </property>
-    <widget class="QLabel" name="label_22">
-     <property name="geometry">
-      <rect>
-       <x>50</x>
-       <y>0</y>
-       <width>91</width>
-       <height>91</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="pixmap">
-      <pixmap resource="mecheye_qt_visualizer.qrc">:/home/grantli/qt_ws/demo/QtMecheyeCamera/mecheye_qt_visualizer/resource/images/hardware_camera.png</pixmap>
-     </property>
-     <property name="scaledContents">
-      <bool>true</bool>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_23">
-     <property name="geometry">
-      <rect>
-       <x>310</x>
-       <y>0</y>
-       <width>101</width>
-       <height>91</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="pixmap">
-      <pixmap resource="mecheye_qt_visualizer.qrc">:/home/grantli/qt_ws/demo/QtMecheyeCamera/mecheye_qt_visualizer/resource/images/hardware_virtualcamera.png</pixmap>
-     </property>
-     <property name="scaledContents">
-      <bool>true</bool>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_9">
-     <property name="geometry">
-      <rect>
-       <x>590</x>
-       <y>0</y>
-       <width>81</width>
-       <height>81</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="pixmap">
-      <pixmap resource="mecheye_qt_visualizer.qrc">:/home/grantli/qt_ws/demo/QtMecheyeCamera/mecheye_qt_visualizer/resource/images/hardware_hub.png</pixmap>
-     </property>
-     <property name="scaledContents">
-      <bool>true</bool>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_24">
-     <property name="geometry">
-      <rect>
-       <x>870</x>
-       <y>0</y>
-       <width>81</width>
-       <height>81</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="pixmap">
-      <pixmap resource="mecheye_qt_visualizer.qrc">:/home/grantli/qt_ws/demo/QtMecheyeCamera/mecheye_qt_visualizer/resource/images/hardware_cpu.png</pixmap>
-     </property>
-     <property name="scaledContents">
-      <bool>true</bool>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_25">
-     <property name="geometry">
-      <rect>
-       <x>1120</x>
-       <y>0</y>
-       <width>91</width>
-       <height>81</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="pixmap">
-      <pixmap resource="mecheye_qt_visualizer.qrc">:/home/grantli/qt_ws/demo/QtMecheyeCamera/mecheye_qt_visualizer/resource/images/hardware_gpu.png</pixmap>
-     </property>
-     <property name="scaledContents">
-      <bool>true</bool>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_26">
-     <property name="geometry">
-      <rect>
-       <x>1380</x>
-       <y>10</y>
-       <width>101</width>
-       <height>71</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="pixmap">
-      <pixmap resource="mecheye_qt_visualizer.qrc">:/home/grantli/qt_ws/demo/QtMecheyeCamera/mecheye_qt_visualizer/resource/images/hardware_disk.png</pixmap>
-     </property>
-     <property name="scaledContents">
-      <bool>true</bool>
-     </property>
-    </widget>
     <widget class="QLabel" name="label_27">
      <property name="geometry">
       <rect>
-       <x>170</x>
-       <y>30</y>
-       <width>71</width>
-       <height>41</height>
+       <x>120</x>
+       <y>20</y>
+       <width>111</width>
+       <height>51</height>
       </rect>
      </property>
      <property name="styleSheet">
@@ -1006,10 +863,10 @@ font: 75 11pt &quot;Ubuntu Condensed&quot;;</string>
     <widget class="QLabel" name="label_28">
      <property name="geometry">
       <rect>
-       <x>430</x>
+       <x>380</x>
        <y>20</y>
-       <width>101</width>
-       <height>41</height>
+       <width>111</width>
+       <height>51</height>
       </rect>
      </property>
      <property name="styleSheet">
@@ -1023,10 +880,10 @@ font: 75 11pt &quot;Ubuntu Condensed&quot;;</string>
     <widget class="QLabel" name="label_29">
      <property name="geometry">
       <rect>
-       <x>700</x>
+       <x>660</x>
        <y>20</y>
-       <width>71</width>
-       <height>41</height>
+       <width>111</width>
+       <height>51</height>
       </rect>
      </property>
      <property name="styleSheet">
@@ -1040,10 +897,10 @@ font: 75 11pt &quot;Ubuntu Condensed&quot;;</string>
     <widget class="QLabel" name="label_30">
      <property name="geometry">
       <rect>
-       <x>980</x>
+       <x>920</x>
        <y>20</y>
-       <width>71</width>
-       <height>41</height>
+       <width>121</width>
+       <height>51</height>
       </rect>
      </property>
      <property name="styleSheet">
@@ -1057,10 +914,10 @@ font: 75 11pt &quot;Ubuntu Condensed&quot;;</string>
     <widget class="QLabel" name="label_31">
      <property name="geometry">
       <rect>
-       <x>1240</x>
+       <x>1210</x>
        <y>20</y>
-       <width>71</width>
-       <height>41</height>
+       <width>121</width>
+       <height>51</height>
       </rect>
      </property>
      <property name="styleSheet">
@@ -1074,10 +931,10 @@ font: 75 11pt &quot;Ubuntu Condensed&quot;;</string>
     <widget class="QLabel" name="label_32">
      <property name="geometry">
       <rect>
-       <x>1510</x>
+       <x>1490</x>
        <y>20</y>
-       <width>41</width>
-       <height>41</height>
+       <width>101</width>
+       <height>51</height>
       </rect>
      </property>
      <property name="styleSheet">
@@ -1086,6 +943,198 @@ font: 75 11pt &quot;Ubuntu Condensed&quot;;</string>
      </property>
      <property name="text">
       <string>硬盘</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="exitButton_2">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>10</y>
+       <width>71</width>
+       <height>71</height>
+      </rect>
+     </property>
+     <property name="cursor">
+      <cursorShape>UpArrowCursor</cursorShape>
+     </property>
+     <property name="mouseTracking">
+      <bool>true</bool>
+     </property>
+     <property name="tabletTracking">
+      <bool>false</bool>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="mecheye_qt_visualizer.qrc">
+       <normaloff>:/home/grantli/qt_ws/demo/QtMecheyeCamera/mecheye_qt_visualizer/resource/images/hardware_camera.png</normaloff>:/home/grantli/qt_ws/demo/QtMecheyeCamera/mecheye_qt_visualizer/resource/images/hardware_camera.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>80</width>
+       <height>80</height>
+      </size>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="exitButton_3">
+     <property name="geometry">
+      <rect>
+       <x>290</x>
+       <y>10</y>
+       <width>71</width>
+       <height>71</height>
+      </rect>
+     </property>
+     <property name="cursor">
+      <cursorShape>UpArrowCursor</cursorShape>
+     </property>
+     <property name="mouseTracking">
+      <bool>true</bool>
+     </property>
+     <property name="tabletTracking">
+      <bool>false</bool>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="mecheye_qt_visualizer.qrc">
+       <normaloff>:/home/grantli/qt_ws/demo/QtMecheyeCamera/mecheye_qt_visualizer/resource/images/hardware_virtualcamera.png</normaloff>:/home/grantli/qt_ws/demo/QtMecheyeCamera/mecheye_qt_visualizer/resource/images/hardware_virtualcamera.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>80</width>
+       <height>80</height>
+      </size>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="exitButton_4">
+     <property name="geometry">
+      <rect>
+       <x>570</x>
+       <y>10</y>
+       <width>71</width>
+       <height>71</height>
+      </rect>
+     </property>
+     <property name="cursor">
+      <cursorShape>UpArrowCursor</cursorShape>
+     </property>
+     <property name="mouseTracking">
+      <bool>true</bool>
+     </property>
+     <property name="tabletTracking">
+      <bool>false</bool>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="mecheye_qt_visualizer.qrc">
+       <normaloff>:/home/grantli/qt_ws/demo/QtMecheyeCamera/mecheye_qt_visualizer/resource/images/hardware_hub.png</normaloff>:/home/grantli/qt_ws/demo/QtMecheyeCamera/mecheye_qt_visualizer/resource/images/hardware_hub.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>80</width>
+       <height>80</height>
+      </size>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="exitButton_5">
+     <property name="geometry">
+      <rect>
+       <x>830</x>
+       <y>10</y>
+       <width>71</width>
+       <height>71</height>
+      </rect>
+     </property>
+     <property name="cursor">
+      <cursorShape>UpArrowCursor</cursorShape>
+     </property>
+     <property name="mouseTracking">
+      <bool>true</bool>
+     </property>
+     <property name="tabletTracking">
+      <bool>false</bool>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="mecheye_qt_visualizer.qrc">
+       <normaloff>:/home/grantli/qt_ws/demo/QtMecheyeCamera/mecheye_qt_visualizer/resource/images/hardware_cpu.png</normaloff>:/home/grantli/qt_ws/demo/QtMecheyeCamera/mecheye_qt_visualizer/resource/images/hardware_cpu.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>80</width>
+       <height>80</height>
+      </size>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="exitButton_6">
+     <property name="geometry">
+      <rect>
+       <x>1120</x>
+       <y>10</y>
+       <width>71</width>
+       <height>71</height>
+      </rect>
+     </property>
+     <property name="cursor">
+      <cursorShape>UpArrowCursor</cursorShape>
+     </property>
+     <property name="mouseTracking">
+      <bool>true</bool>
+     </property>
+     <property name="tabletTracking">
+      <bool>false</bool>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="mecheye_qt_visualizer.qrc">
+       <normaloff>:/home/grantli/qt_ws/demo/QtMecheyeCamera/mecheye_qt_visualizer/resource/images/hardware_gpu.png</normaloff>:/home/grantli/qt_ws/demo/QtMecheyeCamera/mecheye_qt_visualizer/resource/images/hardware_gpu.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>80</width>
+       <height>80</height>
+      </size>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="exitButton_7">
+     <property name="geometry">
+      <rect>
+       <x>1400</x>
+       <y>10</y>
+       <width>71</width>
+       <height>71</height>
+      </rect>
+     </property>
+     <property name="cursor">
+      <cursorShape>UpArrowCursor</cursorShape>
+     </property>
+     <property name="mouseTracking">
+      <bool>true</bool>
+     </property>
+     <property name="tabletTracking">
+      <bool>false</bool>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="mecheye_qt_visualizer.qrc">
+       <normaloff>:/home/grantli/qt_ws/demo/QtMecheyeCamera/mecheye_qt_visualizer/resource/images/hardware_disk.png</normaloff>:/home/grantli/qt_ws/demo/QtMecheyeCamera/mecheye_qt_visualizer/resource/images/hardware_disk.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>80</width>
+       <height>80</height>
+      </size>
      </property>
     </widget>
    </widget>
@@ -1175,245 +1224,6 @@ font: 75 11pt &quot;Ubuntu Condensed&quot;;</string>
     <property name="frameShadow">
      <enum>QFrame::Raised</enum>
     </property>
-    <widget class="QLabel" name="label">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>10</y>
-       <width>191</width>
-       <height>31</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <pointsize>16</pointsize>
-       <weight>50</weight>
-       <italic>false</italic>
-       <bold>false</bold>
-      </font>
-     </property>
-     <property name="text">
-      <string>输出</string>
-     </property>
-    </widget>
-    <widget class="QSlider" name="horizontalSlider_R">
-     <property name="geometry">
-      <rect>
-       <x>190</x>
-       <y>10</y>
-       <width>160</width>
-       <height>29</height>
-      </rect>
-     </property>
-     <property name="maximum">
-      <number>255</number>
-     </property>
-     <property name="value">
-      <number>128</number>
-     </property>
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-    </widget>
-    <widget class="QLCDNumber" name="lcdNumber_R">
-     <property name="geometry">
-      <rect>
-       <x>450</x>
-       <y>10</y>
-       <width>81</width>
-       <height>41</height>
-      </rect>
-     </property>
-     <property name="digitCount">
-      <number>3</number>
-     </property>
-     <property name="segmentStyle">
-      <enum>QLCDNumber::Flat</enum>
-     </property>
-     <property name="intValue" stdset="0">
-      <number>128</number>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_2">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>70</y>
-       <width>191</width>
-       <height>31</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <pointsize>16</pointsize>
-       <weight>50</weight>
-       <italic>false</italic>
-       <bold>false</bold>
-      </font>
-     </property>
-     <property name="text">
-      <string>输出</string>
-     </property>
-    </widget>
-    <widget class="QSlider" name="horizontalSlider_G">
-     <property name="geometry">
-      <rect>
-       <x>190</x>
-       <y>80</y>
-       <width>160</width>
-       <height>29</height>
-      </rect>
-     </property>
-     <property name="maximum">
-      <number>255</number>
-     </property>
-     <property name="value">
-      <number>128</number>
-     </property>
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-    </widget>
-    <widget class="QLCDNumber" name="lcdNumber_G">
-     <property name="geometry">
-      <rect>
-       <x>450</x>
-       <y>70</y>
-       <width>81</width>
-       <height>41</height>
-      </rect>
-     </property>
-     <property name="digitCount">
-      <number>3</number>
-     </property>
-     <property name="segmentStyle">
-      <enum>QLCDNumber::Flat</enum>
-     </property>
-     <property name="intValue" stdset="0">
-      <number>128</number>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_3">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>130</y>
-       <width>191</width>
-       <height>31</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <pointsize>16</pointsize>
-       <weight>50</weight>
-       <italic>false</italic>
-       <bold>false</bold>
-      </font>
-     </property>
-     <property name="text">
-      <string> 输出</string>
-     </property>
-    </widget>
-    <widget class="QSlider" name="horizontalSlider_B">
-     <property name="geometry">
-      <rect>
-       <x>190</x>
-       <y>130</y>
-       <width>160</width>
-       <height>29</height>
-      </rect>
-     </property>
-     <property name="maximum">
-      <number>255</number>
-     </property>
-     <property name="value">
-      <number>128</number>
-     </property>
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-    </widget>
-    <widget class="QLCDNumber" name="lcdNumber_B">
-     <property name="geometry">
-      <rect>
-       <x>450</x>
-       <y>120</y>
-       <width>81</width>
-       <height>41</height>
-      </rect>
-     </property>
-     <property name="digitCount">
-      <number>3</number>
-     </property>
-     <property name="segmentStyle">
-      <enum>QLCDNumber::Flat</enum>
-     </property>
-     <property name="intValue" stdset="0">
-      <number>128</number>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_4">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>180</y>
-       <width>141</width>
-       <height>31</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <pointsize>16</pointsize>
-       <weight>50</weight>
-       <italic>false</italic>
-       <bold>false</bold>
-      </font>
-     </property>
-     <property name="text">
-      <string>输出</string>
-     </property>
-    </widget>
-    <widget class="QSlider" name="horizontalSlider_p">
-     <property name="geometry">
-      <rect>
-       <x>190</x>
-       <y>180</y>
-       <width>160</width>
-       <height>29</height>
-      </rect>
-     </property>
-     <property name="minimum">
-      <number>1</number>
-     </property>
-     <property name="maximum">
-      <number>6</number>
-     </property>
-     <property name="value">
-      <number>2</number>
-     </property>
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-    </widget>
-    <widget class="QLCDNumber" name="lcdNumber_p">
-     <property name="geometry">
-      <rect>
-       <x>450</x>
-       <y>180</y>
-       <width>81</width>
-       <height>41</height>
-      </rect>
-     </property>
-     <property name="digitCount">
-      <number>1</number>
-     </property>
-     <property name="segmentStyle">
-      <enum>QLCDNumber::Flat</enum>
-     </property>
-     <property name="intValue" stdset="0">
-      <number>2</number>
-     </property>
-    </widget>
    </widget>
    <widget class="QFrame" name="frame_9">
     <property name="geometry">
@@ -1635,13 +1445,44 @@ font: 75 11pt &quot;Ubuntu Condensed&quot;;</string>
      <string/>
     </property>
    </widget>
+   <widget class="QPushButton" name="exitButton_8">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>10</y>
+      <width>71</width>
+      <height>71</height>
+     </rect>
+    </property>
+    <property name="cursor">
+     <cursorShape>UpArrowCursor</cursorShape>
+    </property>
+    <property name="mouseTracking">
+     <bool>true</bool>
+    </property>
+    <property name="tabletTracking">
+     <bool>false</bool>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="mecheye_qt_visualizer.qrc">
+      <normaloff>:/home/grantli/qt_ws/demo/QtMecheyeCamera/mecheye_qt_visualizer/resource/images/icon.png</normaloff>:/home/grantli/qt_ws/demo/QtMecheyeCamera/mecheye_qt_visualizer/resource/images/icon.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>400</width>
+      <height>400</height>
+     </size>
+    </property>
+   </widget>
    <zorder>frame_2</zorder>
    <zorder>frame_7</zorder>
    <zorder>frame</zorder>
    <zorder>frame_4</zorder>
    <zorder>frame_3</zorder>
    <zorder>textEdit</zorder>
-   <zorder>label_5</zorder>
    <zorder>frame_6</zorder>
    <zorder>frame_8</zorder>
    <zorder>frame_9</zorder>
@@ -1651,6 +1492,7 @@ font: 75 11pt &quot;Ubuntu Condensed&quot;;</string>
    <zorder>frame_5</zorder>
    <zorder>exitButton</zorder>
    <zorder>timeLabel</zorder>
+   <zorder>exitButton_8</zorder>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
  </widget>
@@ -1664,54 +1506,5 @@ font: 75 11pt &quot;Ubuntu Condensed&quot;;</string>
  <resources>
   <include location="mecheye_qt_visualizer.qrc"/>
  </resources>
- <connections>
-  <connection>
-   <sender>horizontalSlider_R</sender>
-   <signal>sliderMoved(int)</signal>
-   <receiver>lcdNumber_R</receiver>
-   <slot>display(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>136</x>
-     <y>111</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>222</x>
-     <y>115</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>horizontalSlider_G</sender>
-   <signal>sliderMoved(int)</signal>
-   <receiver>lcdNumber_G</receiver>
-   <slot>display(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>166</x>
-     <y>193</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>235</x>
-     <y>195</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>horizontalSlider_B</sender>
-   <signal>sliderMoved(int)</signal>
-   <receiver>lcdNumber_B</receiver>
-   <slot>display(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>185</x>
-     <y>273</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>224</x>
-     <y>275</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
 </ui>
