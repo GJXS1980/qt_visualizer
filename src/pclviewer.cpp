@@ -29,9 +29,10 @@ PCLViewer::PCLViewer (QWidget *parent) : QMainWindow (parent), ui (new Ui::PCLVi
 //  // 初始化时间显示
 //  updateTime();
 
-  workerthread = new WorkerThread(this);
-  connect(workerthread, &WorkerThread::updateTimeSignal, this, &PCLViewer::receiveUpdateTime);
-  workerthread->start();
+  // 更新时间线程
+  timeUpdater = new TimeUpdater(this);
+  connect(timeUpdater, &TimeUpdater::updateTimeSignal, this, &PCLViewer::receiveUpdateTime);
+  timeUpdater->start();
 
   // 搜索相机列表
   std::cout << "Discovering all available cameras..." << std::endl;

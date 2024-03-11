@@ -573,8 +573,8 @@ p, li { white-space: pre-wrap; }
       <string/>
      </property>
      <property name="icon">
-      <iconset resource="mecheye_qt_visualizer.qrc">
-       <normaloff>:/home/grantli/qt_ws/demo/QtMecheyeCamera/mecheye_qt_visualizer/resource/images/run.png</normaloff>:/home/grantli/qt_ws/demo/QtMecheyeCamera/mecheye_qt_visualizer/resource/images/run.png</iconset>
+      <iconset resource="../resource/mecheye_qt_visualizer.qrc">
+       <normaloff>:/images/images/run.png</normaloff>:/images/images/run.png</iconset>
      </property>
      <property name="iconSize">
       <size>
@@ -690,8 +690,8 @@ p, li { white-space: pre-wrap; }
       <string/>
      </property>
      <property name="icon">
-      <iconset resource="mecheye_qt_visualizer.qrc">
-       <normaloff>:/home/grantli/qt_ws/demo/QtMecheyeCamera/mecheye_qt_visualizer/resource/images/create_model.png</normaloff>:/home/grantli/qt_ws/demo/QtMecheyeCamera/mecheye_qt_visualizer/resource/images/create_model.png</iconset>
+      <iconset resource="../resource/mecheye_qt_visualizer.qrc">
+       <normaloff>:/images/images/create_model.png</normaloff>:/images/images/create_model.png</iconset>
      </property>
      <property name="iconSize">
       <size>
@@ -722,8 +722,8 @@ p, li { white-space: pre-wrap; }
       <string/>
      </property>
      <property name="icon">
-      <iconset resource="mecheye_qt_visualizer.qrc">
-       <normaloff>:/home/grantli/qt_ws/demo/QtMecheyeCamera/mecheye_qt_visualizer/resource/images/maintenance.png</normaloff>:/home/grantli/qt_ws/demo/QtMecheyeCamera/mecheye_qt_visualizer/resource/images/maintenance.png</iconset>
+      <iconset resource="../resource/mecheye_qt_visualizer.qrc">
+       <normaloff>:/images/images/maintenance.png</normaloff>:/images/images/maintenance.png</iconset>
      </property>
      <property name="iconSize">
       <size>
@@ -754,8 +754,8 @@ p, li { white-space: pre-wrap; }
       <string/>
      </property>
      <property name="icon">
-      <iconset resource="mecheye_qt_visualizer.qrc">
-       <normaloff>:/home/grantli/qt_ws/demo/QtMecheyeCamera/mecheye_qt_visualizer/resource/images/document.png</normaloff>:/home/grantli/qt_ws/demo/QtMecheyeCamera/mecheye_qt_visualizer/resource/images/document.png</iconset>
+      <iconset resource="../resource/mecheye_qt_visualizer.qrc">
+       <normaloff>:/images/images/document.png</normaloff>:/images/images/document.png</iconset>
      </property>
      <property name="iconSize">
       <size>
@@ -786,8 +786,8 @@ p, li { white-space: pre-wrap; }
       <string/>
      </property>
      <property name="icon">
-      <iconset resource="mecheye_qt_visualizer.qrc">
-       <normaloff>:/home/grantli/qt_ws/demo/QtMecheyeCamera/mecheye_qt_visualizer/resource/images/debug.png</normaloff>:/home/grantli/qt_ws/demo/QtMecheyeCamera/mecheye_qt_visualizer/resource/images/debug.png</iconset>
+      <iconset resource="../resource/mecheye_qt_visualizer.qrc">
+       <normaloff>:/images/images/debug.png</normaloff>:/images/images/debug.png</iconset>
      </property>
      <property name="iconSize">
       <size>
@@ -967,8 +967,8 @@ font: 75 11pt &quot;Ubuntu Condensed&quot;;</string>
       <string/>
      </property>
      <property name="icon">
-      <iconset resource="mecheye_qt_visualizer.qrc">
-       <normaloff>:/home/grantli/qt_ws/demo/QtMecheyeCamera/mecheye_qt_visualizer/resource/images/hardware_camera.png</normaloff>:/home/grantli/qt_ws/demo/QtMecheyeCamera/mecheye_qt_visualizer/resource/images/hardware_camera.png</iconset>
+      <iconset resource="../resource/mecheye_qt_visualizer.qrc">
+       <normaloff>:/images/images/hardware_camera.png</normaloff>:/images/images/hardware_camera.png</iconset>
      </property>
      <property name="iconSize">
       <size>
@@ -999,8 +999,8 @@ font: 75 11pt &quot;Ubuntu Condensed&quot;;</string>
       <string/>
      </property>
      <property name="icon">
-      <iconset resource="mecheye_qt_visualizer.qrc">
-       <normaloff>:/home/grantli/qt_ws/demo/QtMecheyeCamera/mecheye_qt_visualizer/resource/images/hardware_virtualcamera.png</normaloff>:/home/grantli/qt_ws/demo/QtMecheyeCamera/mecheye_qt_visualizer/resource/images/hardware_virtualcamera.png</iconset>
+      <iconset resource="../resource/mecheye_qt_visualizer.qrc">
+       <normaloff>:/images/images/hardware_virtualcamera.png</normaloff>:/images/images/hardware_virtualcamera.png</iconset>
      </property>
      <property name="iconSize">
       <size>
@@ -1031,8 +1031,8 @@ font: 75 11pt &quot;Ubuntu Condensed&quot;;</string>
       <string/>
      </property>
      <property name="icon">
-      <iconset resource="mecheye_qt_visualizer.qrc">
-       <normaloff>:/home/grantli/qt_ws/demo/QtMecheyeCamera/mecheye_qt_visualizer/resource/images/hardware_hub.png</normaloff>:/home/grantli/qt_ws/demo/QtMecheyeCamera/mecheye_qt_visualizer/resource/images/hardware_hub.png</iconset>
+      <iconset resource="../resource/mecheye_qt_visualizer.qrc">
+       <normaloff>:/images/images/hardware_hub.png</normaloff>:/images/images/hardware_hub.png</iconset>
      </property>
      <property name="iconSize">
       <size>
@@ -1063,8 +1063,8 @@ font: 75 11pt &quot;Ubuntu Condensed&quot;;</string>
       <string/>
      </property>
      <property name="icon">
-      <iconset resource="mecheye_qt_visualizer.qrc">
-       <normaloff>:/home/grantli/qt_ws/demo/QtMecheyeCamera/mecheye_qt_visualizer/resource/images/hardware_cpu.png</normaloff>:/home/grantli/qt_ws/demo/QtMecheyeCamera/mecheye_qt_visualizer/resource/images/hardware_cpu.png</iconset>
+      <iconset resource="../resource/mecheye_qt_visualizer.qrc">
+       <normaloff>:/images/images/hardware_cpu.png</normaloff>:/images/images/hardware_cpu.png</iconset>
      </property>
      <property name="iconSize">
       <size>
@@ -1095,8 +1095,8 @@ font: 75 11pt &quot;Ubuntu Condensed&quot;;</string>
       <string/>
      </property>
      <property name="icon">
-      <iconset resource="mecheye_qt_visualizer.qrc">
-       <normaloff>:/home/grantli/qt_ws/demo/QtMecheyeCamera/mecheye_qt_visualizer/resource/images/hardware_gpu.png</normaloff>:/home/grantli/qt_ws/demo/QtMecheyeCamera/mecheye_qt_visualizer/resource/images/hardware_gpu.png</iconset>
+      <iconset resource="../resource/mecheye_qt_visualizer.qrc">
+       <normaloff>:/images/images/hardware_gpu.png</normaloff>:/images/images/hardware_gpu.png</iconset>
      </property>
      <property name="iconSize">
       <size>
@@ -1127,8 +1127,8 @@ font: 75 11pt &quot;Ubuntu Condensed&quot;;</string>
       <string/>
      </property>
      <property name="icon">
-      <iconset resource="mecheye_qt_visualizer.qrc">
-       <normaloff>:/home/grantli/qt_ws/demo/QtMecheyeCamera/mecheye_qt_visualizer/resource/images/hardware_disk.png</normaloff>:/home/grantli/qt_ws/demo/QtMecheyeCamera/mecheye_qt_visualizer/resource/images/hardware_disk.png</iconset>
+      <iconset resource="../resource/mecheye_qt_visualizer.qrc">
+       <normaloff>:/images/images/hardware_disk.png</normaloff>:/images/images/hardware_disk.png</iconset>
      </property>
      <property name="iconSize">
       <size>
@@ -1298,7 +1298,7 @@ font: 75 11pt &quot;Ubuntu Condensed&quot;;</string>
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap resource="mecheye_qt_visualizer.qrc">:/home/grantli/qt_ws/demo/QtMecheyeCamera/mecheye_qt_visualizer/resource/images/project_stopped.png</pixmap>
+      <pixmap resource="../resource/mecheye_qt_visualizer.qrc">:/images/images/project_stopped.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -1358,7 +1358,7 @@ font: 75 11pt &quot;Ubuntu Condensed&quot;;</string>
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap resource="mecheye_qt_visualizer.qrc">:/home/grantli/qt_ws/demo/QtMecheyeCamera/mecheye_qt_visualizer/resource/images/step_warning.png</pixmap>
+      <pixmap>:/home/grantli/qt_ws/demo/QtMecheyeCamera/mecheye_qt_visualizer/resource/images/step_warning.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -1407,8 +1407,8 @@ font: 75 11pt &quot;Ubuntu Condensed&quot;;</string>
      <string/>
     </property>
     <property name="icon">
-     <iconset resource="mecheye_qt_visualizer.qrc">
-      <normaloff>:/home/grantli/qt_ws/demo/QtMecheyeCamera/mecheye_qt_visualizer/resource/images/close_window.png</normaloff>:/home/grantli/qt_ws/demo/QtMecheyeCamera/mecheye_qt_visualizer/resource/images/close_window.png</iconset>
+     <iconset resource="../resource/mecheye_qt_visualizer.qrc">
+      <normaloff>:/images/images/close_window.png</normaloff>:/images/images/close_window.png</iconset>
     </property>
     <property name="iconSize">
      <size>
@@ -1467,7 +1467,7 @@ font: 75 11pt &quot;Ubuntu Condensed&quot;;</string>
      <string/>
     </property>
     <property name="icon">
-     <iconset resource="mecheye_qt_visualizer.qrc">
+     <iconset>
       <normaloff>:/home/grantli/qt_ws/demo/QtMecheyeCamera/mecheye_qt_visualizer/resource/images/icon.png</normaloff>:/home/grantli/qt_ws/demo/QtMecheyeCamera/mecheye_qt_visualizer/resource/images/icon.png</iconset>
     </property>
     <property name="iconSize">
@@ -1504,7 +1504,8 @@ font: 75 11pt &quot;Ubuntu Condensed&quot;;</string>
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="mecheye_qt_visualizer.qrc"/>
+  <include location="../resource/mecheye_qt_visualizer.qrc"/>
+  <include location="../resource/mecheye_qt_visualizer.qrc"/>
  </resources>
  <connections/>
 </ui>

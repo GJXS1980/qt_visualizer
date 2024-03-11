@@ -1,0 +1,24 @@
+<RCC>
+  <qresource prefix="images">
+    <file>images/navLogo.png</file>
+    <file>images/run.png</file>
+    <file>images/debug.png</file>
+    <file>images/close_window.png</file>
+    <file>images/create_model.png</file>
+    <file>images/document.png</file>
+    <file>images/maintenance.png</file>
+    <file>images/hardware_camera.png</file>
+    <file>images/hardware_cpu.png</file>
+    <file>images/hardware_disk.png</file>
+    <file>images/hardware_gpu.png</file>
+    <file>images/hardware_hub.png</file>
+    <file>images/hardware_virtualcamera.png</file>
+    <file>images/project_stopped.png</file>
+    <file>images/step_warning.png</file>
+    <file>images/icon.png</file>
+
+  </qresource>
+</RCC>
+
+
+

@@ -20,10 +20,7 @@ else()
 endif()
 
 # 添加 .qrc 文件
-qt5_add_resources(QRC_FILES
-    mecheye_qt_visualizer.qrc
-)
-
+qt5_add_resources(QRC_FILES resource/mecheye_qt_visualizer.qrc)
 
 # Find PCL
 find_package(PCL REQUIRED)
@@ -57,24 +54,49 @@ elseif(CMAKE_HOST_UNIX)
   endif()
 endif()
 
-include_directories(${MECHEYEAPI_INCLUDE_DIRS} ${OpenCV_INCLUDE_DIRS})
-link_directories(${MECHEYEAPI_LIBRARY_DIRS} ${OpenCV_LIBRARY_DIRS})
+# Add the source files for PCLViewer class
+# add_library(PCLViewer 
+#   include/pclviewer.h
+#   src/pclviewer.cpp
+# )
+
+include_directories(
+                      ${CMAKE_INCLUDE_CURRENT_DIR} 
+                      ${MECHEYEAPI_INCLUDE_DIRS} 
+                      ${OpenCV_INCLUDE_DIRS} 
+                      ${PCL_INCLUDE_DIRS} 
+                      ${CMAKE_CURRENT_SOURCE_DIR}/include
+                    )
+link_directories(
+                  ${MECHEYEAPI_LIBRARY_DIRS} 
+                  ${OpenCV_LIBRARY_DIRS} 
+                  ${PCL_DEFINITIONS}
+                )
 
 # Fix a compilation bug under ubuntu 16.04 (Xenial)
 list(REMOVE_ITEM PCL_LIBRARIES "vtkproj4")
 
-include_directories(${PCL_INCLUDE_DIRS})
-add_definitions(${PCL_DEFINITIONS})
+# target_include_directories(PCLViewer PRIVATE include)
+add_executable(
+                ${PROJECT_NAME} 
+                ${QRC_FILES} 
+                src/main.cpp 
+                src/pclviewer.cpp
+              )
 
-set(project_SOURCES main.cpp pclviewer.cpp)
-
-
-add_executable(${PROJECT_NAME} ${project_SOURCES} ${QRC_FILES} )
-
-target_link_libraries(${PROJECT_NAME} ${PCL_LIBRARIES} ${QTX}::Widgets ${MECHEYEAPI_LIBRARIES} ${OpenCV_LIBS})
+target_link_libraries(
+                        ${PROJECT_NAME} 
+                        ${PCL_LIBRARIES} 
+                        ${QTX}::Widgets 
+                        ${MECHEYEAPI_LIBRARIES} 
+                        ${OpenCV_LIBS}
+                        ${CMAKE_CURRENT_SOURCE_DIR}/include
+                      )
 
 # 设置启动时的环境变量
-set_target_properties(${PROJECT_NAME} PROPERTIES
-    ENVIRONMENT "QT_OPENGL=software"
-)
+set_target_properties(
+                        ${PROJECT_NAME} 
+                        PROPERTIES
+                        ENVIRONMENT "QT_OPENGL=software"
+                      )
 

@@ -34,13 +34,13 @@
 typedef pcl::PointXYZRGBA PointT;
 typedef pcl::PointCloud<PointT> PointCloudT;
 
-// 定义一个 WorkerThread 类，用于在单独的线程中获取系统时间
-class WorkerThread : public QThread
+// 定义获取系统时间并更新到UI的线程
+class TimeUpdater : public QThread
 {
     Q_OBJECT
 
 public:
-    explicit WorkerThread(QObject* parent = nullptr) : QThread(parent) {}
+    explicit TimeUpdater(QObject* parent = nullptr) : QThread(parent) {}
 
 signals:
     void updateTimeSignal(const QString &currentTime);
@@ -65,10 +65,28 @@ protected:
 };
 
 
+// 定义一个 WorkerThread 类，用于在单独的线程中获取系统时间
+class CameraConnector : public QThread
+{
+    Q_OBJECT
+
+signals:
+    void cameraConnectedSignal(bool connected);
+
+protected:
+    void run() override
+    {
+        // Your camera connection code goes here
+        // Emit the signal with the result
+        emit cameraConnectedSignal(true);  // Modify as per your camera connection logic
+    }
+};
+
+
 namespace Ui
 {
   class PCLViewer;
-  class WorkerThread;
+  class TimeUpdater;
 }
 
 
@@ -101,7 +119,7 @@ protected:
 
 private:
   Ui::PCLViewer *ui;
-  WorkerThread *workerthread;
+  TimeUpdater *timeUpdater;
 };
 
 
