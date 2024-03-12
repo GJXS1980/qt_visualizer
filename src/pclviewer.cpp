@@ -10,33 +10,22 @@
 #endif
 
 mmind::eye::Camera mecheyecamera;
-bool findCamera = true;
+//bool findCamera = true;
 
 PCLViewer::PCLViewer (QWidget *parent) : QMainWindow (parent), ui (new Ui::PCLViewer)
 {
   ui->setupUi (this);
-  this->setWindowTitle ("隆深智能装箱系统");
 
   // Setup the cloud pointer
   cloud.reset (new PointCloudT);
   // The number of points in the cloud
   cloud->resize (200);
 
-//  // 创建一个 QTimer 用于定时更新时间
-//  QTimer *timer = new QTimer(this);
-//  connect(timer, &QTimer::timeout, this, &PCLViewer::updateTime);
-//  timer->start(1000);  // 每秒更新一次
-//  // 初始化时间显示
-//  updateTime();
-
   // 更新时间线程
   timeUpdater = new TimeUpdater(this);
   connect(timeUpdater, &TimeUpdater::updateTimeSignal, this, &PCLViewer::receiveUpdateTime);
   timeUpdater->start();
 
-  // 搜索相机列表
-  std::cout << "Discovering all available cameras..." << std::endl;
-  std::vector<mmind::eye::CameraInfo> cameraInfoList = mmind::eye::Camera::discoverCameras();
 
   // Set up the QVTK window  
 #if VTK_MAJOR_VERSION > 8
@@ -73,50 +62,65 @@ PCLViewer::PCLViewer (QWidget *parent) : QMainWindow (parent), ui (new Ui::PCLVi
 
   // 点击退出按钮
   connect (ui->exitButton,  SIGNAL (clicked ()), this, SLOT (exitViewer ()));
-
-  // 搜索相机
-  while (findCamera)
-  {
-      if (cameraInfoList.empty())
-      {
-          // 相机连接异常，弹窗显示消息
-          QMessageBox::critical(nullptr, "连接异常", "请检测相机连接是否正常.", QMessageBox::Ok);
-          findCamera = false;
-          qApp->quit();
-      }
-      else
-      {
-          // 弹窗输入相机IP
-          bool ok;
-          QString cameraIP = QInputDialog::getText(nullptr, "输入相机IP", "请输入相机IP地址:", QLineEdit::Normal, "", &ok);
-
-          if (!ok || cameraIP.isEmpty())
-          {
-              // 用户取消输入，执行退出操作
-              qApp->quit();
-          }
-          else
-          {
-              // 通过IP连接相机
-              mmind::eye::ErrorStatus status = mecheyecamera.connect(cameraIP.toStdString());
-
-              if (status.isOK())
-              {
-                  // 连接成功，退出循环
-                  std::cout << "连接成功" << std::endl;
-                  findCamera = false;
-              }
-              else
-              {
-                  // 连接错误，弹窗显示消息
-                  QMessageBox::critical(nullptr, "错误", "输入错误，请重新输入！", QMessageBox::Ok);
-                  findCamera = true;
-              }
-          }
-      }
-  }
-
+  // 点击连接相机按钮
+  connect (ui->connectCameraButton,  SIGNAL (clicked ()), this, SLOT (connectCameraButton ()));
 }
+
+
+/**
+ * @brief 连接相机
+ *
+ * @param None
+ * @return None
+ */
+void PCLViewer::connectCameraButton ()
+{
+
+    // 搜索相机列表
+    std::cout << "Discovering all available cameras..." << std::endl;
+    std::vector<mmind::eye::CameraInfo> cameraInfoList = mmind::eye::Camera::discoverCameras();
+
+
+    if (cameraInfoList.empty())
+    {
+        // 相机连接异常，弹窗显示消息
+        QMessageBox::critical(nullptr, "连接异常", "请检测相机连接是否正常.", QMessageBox::Ok);
+        qApp->quit();
+     }
+     else
+     {
+        // 弹窗输入相机IP
+        bool ok;
+        QString cameraIP = QInputDialog::getText(nullptr, "输入相机IP", "请输入相机IP地址:", QLineEdit::Normal, "", &ok);
+
+        if (!ok || cameraIP.isEmpty())
+        {
+            // 用户取消输入，执行退出操作
+            qApp->quit();
+        }
+        else
+        {
+            // 通过IP连接相机
+            mmind::eye::ErrorStatus status = mecheyecamera.connect(cameraIP.toStdString());
+
+            if (status.isOK())
+            {
+                // 连接成功，退出循环
+                std::cout << "连接成功" << std::endl;
+                ui->runStatus->setText("相机连接成功");
+                ui->cameraStatus->setText("相机连接成功");
+            }
+            else
+            {
+                // 连接错误，弹窗显示消息
+                QMessageBox::critical(nullptr, "错误", "输入错误，请重新输入！", QMessageBox::Ok);
+                ui->runStatus->setText("相机连接失败");
+            }
+       }
+    }
+}
+
+
 
 
 /**

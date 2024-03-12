@@ -65,7 +65,7 @@ protected:
 };
 
 
-// 定义一个 WorkerThread 类，用于在单独的线程中获取系统时间
+// 定义拍照线程
 class CameraConnector : public QThread
 {
     Q_OBJECT
@@ -81,6 +81,24 @@ protected:
         emit cameraConnectedSignal(true);  // Modify as per your camera connection logic
     }
 };
+
+
+//// 定义一个 WorkerThread 类，用于在单独的线程中获取系统时间
+//class CameraConnector : public QThread
+//{
+//    Q_OBJECT
+
+//signals:
+//    void cameraConnectedSignal(bool connected);
+
+//protected:
+//    void run() override
+//    {
+//        // Your camera connection code goes here
+//        // Emit the signal with the result
+//        emit cameraConnectedSignal(true);  // Modify as per your camera connection logic
+//    }
+//};
 
 
 namespace Ui
@@ -109,6 +127,7 @@ public Q_SLOTS:
   void exitViewer();
   void updateTime();
   void receiveUpdateTime(const QString &currentTime);
+  void connectCameraButton();
 
 protected:
   void refreshView();
