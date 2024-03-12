@@ -118,7 +118,7 @@ public:
   ~PCLViewer ();
 
 public Q_SLOTS:
-  void randomButtonPressed ();
+  void runButtonPressed ();
 
   void DLImagViewer();
   void resultImagViewer();

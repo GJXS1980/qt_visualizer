@@ -11,6 +11,8 @@
 
 mmind::eye::Camera mecheyecamera;
 //bool findCamera = true;
+bool camera_ok; // 相机连接状态
+QString cameraIP; // 相机ip
 
 PCLViewer::PCLViewer (QWidget *parent) : QMainWindow (parent), ui (new Ui::PCLViewer)
 {
@@ -58,7 +60,7 @@ PCLViewer::PCLViewer (QWidget *parent) : QMainWindow (parent), ui (new Ui::PCLVi
 #endif
 
   // 点击运行按钮开始拍照识别
-  connect (ui->runButton,  SIGNAL (clicked ()), this, SLOT (randomButtonPressed ()));
+  connect (ui->runButton,  SIGNAL (clicked ()), this, SLOT (runButtonPressed ()));
 
   // 点击退出按钮
   connect (ui->exitButton,  SIGNAL (clicked ()), this, SLOT (exitViewer ()));
@@ -90,16 +92,20 @@ void PCLViewer::connectCameraButton ()
      else
      {
         // 弹窗输入相机IP
-        bool ok;
-        QString cameraIP = QInputDialog::getText(nullptr, "输入相机IP", "请输入相机IP地址:", QLineEdit::Normal, "", &ok);
+        cameraIP = QInputDialog::getText(nullptr, "输入相机IP", "请输入相机IP地址:", QLineEdit::Normal, "", &camera_ok);
 
-        if (!ok || cameraIP.isEmpty())
+        if (!camera_ok || cameraIP.isEmpty())
         {
             // 用户取消输入，执行退出操作
-            qApp->quit();
+//            qApp->quit();
         }
         else
         {
+            QString strTCP = "TCP Server\n";
+            QString strTCPStatus = "设备已接入";
+            QString strCameraTCP = strTCP + strTCPStatus;
+            ui->TCPServer->setText(strCameraTCP);
+
             // 通过IP连接相机
             mmind::eye::ErrorStatus status = mecheyecamera.connect(cameraIP.toStdString());
 
@@ -108,7 +114,11 @@ void PCLViewer::connectCameraButton ()
                 // 连接成功，退出循环
                 std::cout << "连接成功" << std::endl;
                 ui->runStatus->setText("相机连接成功");
-                ui->cameraStatus->setText("相机连接成功");
+                QString strMAC = "主机序列号 \n";
+                QString strIP = "IP:  ";
+                QString strCameraStatus = " 已连接";
+                QString strCamera = strMAC + strIP + cameraIP + strCameraStatus;
+                ui->cameraStatus->setText(strCamera);
             }
             else
             {
@@ -121,49 +131,55 @@ void PCLViewer::connectCameraButton ()
 }
 
 
-
-
 /**
  * @brief 连接相机并获取彩色图、深度图像和点云，并作可视化显示
  *
  * @param None
  * @return None
  */
-void PCLViewer::randomButtonPressed ()
+void PCLViewer::runButtonPressed ()
 {
-    mmind::eye::Frame2DAnd3D frame2DAnd3D;
-    showError(mecheyecamera.capture2DAnd3D(frame2DAnd3D));
+    if (!camera_ok || cameraIP.isEmpty())
+    {
+        // 用户取消输入，执行退出操作
+//            qApp->quit();
+    }
+    else
+    {
+        mmind::eye::Frame2DAnd3D frame2DAnd3D;
+        showError(mecheyecamera.capture2DAnd3D(frame2DAnd3D));
 
-    //  保存彩色图像
-    const std::string imageColorFile = "2DColorImage.png";
-    // Save the obtained data with the set filenames.
-    mmind::eye::Color2DImage colorImage = frame2DAnd3D.frame2D().getColorImage();
-    cv::Mat color8UC3 = cv::Mat(colorImage.height(), colorImage.width(), CV_8UC3, colorImage.data());
-    cv::imwrite(imageColorFile, color8UC3);
+        //  保存彩色图像
+        const std::string imageColorFile = "2DColorImage.png";
+        // Save the obtained data with the set filenames.
+        mmind::eye::Color2DImage colorImage = frame2DAnd3D.frame2D().getColorImage();
+        cv::Mat color8UC3 = cv::Mat(colorImage.height(), colorImage.width(), CV_8UC3, colorImage.data());
+        cv::imwrite(imageColorFile, color8UC3);
 
-    const std::string depthImgFile = "DepthMap.tiff";
-    mmind::eye::DepthMap depthMap = frame2DAnd3D.frame3D().getDepthMap();
-    cv::Mat depth32F = cv::Mat(depthMap.height(), depthMap.width(), CV_32FC1, depthMap.data());
-    cv::imwrite(depthImgFile, depth32F);
+        const std::string depthImgFile = "DepthMap.tiff";
+        mmind::eye::DepthMap depthMap = frame2DAnd3D.frame3D().getDepthMap();
+        cv::Mat depth32F = cv::Mat(depthMap.height(), depthMap.width(), CV_32FC1, depthMap.data());
+        cv::imwrite(depthImgFile, depth32F);
 
-   const std::string UntexturedPointCloudFile = "UntexturedPointCloud.ply";
-    showError(frame2DAnd3D.frame3D().saveUntexturedPointCloud(mmind::eye::FileFormat::PLY, UntexturedPointCloudFile));
+       const std::string UntexturedPointCloudFile = "UntexturedPointCloud.ply";
+        showError(frame2DAnd3D.frame3D().saveUntexturedPointCloud(mmind::eye::FileFormat::PLY, UntexturedPointCloudFile));
 
-    const std::string texturedPointCloudFile = "TexturedPointCloud.ply";
-    showError(frame2DAnd3D.saveTexturedPointCloud(mmind::eye::FileFormat::PLY, texturedPointCloudFile));
-    //std::cout << "Capture and save the textured point cloud: " << texturedPointCloudFile << std::endl;
+        const std::string texturedPointCloudFile = "TexturedPointCloud.ply";
+        showError(frame2DAnd3D.saveTexturedPointCloud(mmind::eye::FileFormat::PLY, texturedPointCloudFile));
+        //std::cout << "Capture and save the textured point cloud: " << texturedPointCloudFile << std::endl;
 
-    // 点云结果可视化界面
-    pointCloundViewer();
-    // 工位可视化界面
-    workSpaceViewer();
+        // 点云结果可视化界面
+        pointCloundViewer();
+        // 工位可视化界面
+        workSpaceViewer();
 
-    // 实例分割图像可视化
-    DLImagViewer();
-    // 结果图像可视化
-    resultImagViewer();
+        // 实例分割图像可视化
+        DLImagViewer();
+        // 结果图像可视化
+        resultImagViewer();
 
-    refreshView();
+        refreshView();
+    }
 }
 
 
