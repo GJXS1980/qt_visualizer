@@ -823,7 +823,7 @@ font: 75 11pt &quot;Ubuntu Condensed&quot;;</string>
       <rect>
        <x>380</x>
        <y>20</y>
-       <width>111</width>
+       <width>171</width>
        <height>51</height>
       </rect>
      </property>
@@ -832,15 +832,15 @@ font: 75 11pt &quot;Ubuntu Condensed&quot;;</string>
 </string>
      </property>
      <property name="text">
-      <string>虚拟相机连接</string>
+      <string>虚拟相机未连接</string>
      </property>
     </widget>
     <widget class="QLabel" name="TCPServer">
      <property name="geometry">
       <rect>
-       <x>660</x>
+       <x>650</x>
        <y>20</y>
-       <width>161</width>
+       <width>181</width>
        <height>51</height>
       </rect>
      </property>
@@ -852,12 +852,12 @@ font: 75 11pt &quot;Ubuntu Condensed&quot;;</string>
       <string>TCP Server等待设备接入</string>
      </property>
     </widget>
-    <widget class="QLabel" name="label_30">
+    <widget class="QLabel" name="cpuStatus">
      <property name="geometry">
       <rect>
-       <x>920</x>
+       <x>930</x>
        <y>20</y>
-       <width>121</width>
+       <width>171</width>
        <height>51</height>
       </rect>
      </property>
@@ -874,7 +874,7 @@ font: 75 11pt &quot;Ubuntu Condensed&quot;;</string>
       <rect>
        <x>1210</x>
        <y>20</y>
-       <width>121</width>
+       <width>141</width>
        <height>51</height>
       </rect>
      </property>
@@ -889,9 +889,9 @@ font: 75 11pt &quot;Ubuntu Condensed&quot;;</string>
     <widget class="QLabel" name="label_32">
      <property name="geometry">
       <rect>
-       <x>1490</x>
+       <x>1440</x>
        <y>20</y>
-       <width>101</width>
+       <width>161</width>
        <height>51</height>
       </rect>
      </property>
@@ -1002,7 +1002,7 @@ font: 75 11pt &quot;Ubuntu Condensed&quot;;</string>
     <widget class="QPushButton" name="exitButton_5">
      <property name="geometry">
       <rect>
-       <x>830</x>
+       <x>850</x>
        <y>10</y>
        <width>71</width>
        <height>71</height>
@@ -1066,7 +1066,7 @@ font: 75 11pt &quot;Ubuntu Condensed&quot;;</string>
     <widget class="QPushButton" name="exitButton_7">
      <property name="geometry">
       <rect>
-       <x>1400</x>
+       <x>1360</x>
        <y>10</y>
        <width>71</width>
        <height>71</height>
@@ -1221,7 +1221,7 @@ font: 75 11pt &quot;Ubuntu Condensed&quot;;</string>
     <widget class="QLabel" name="runStatus">
      <property name="geometry">
       <rect>
-       <x>20</x>
+       <x>10</x>
        <y>20</y>
        <width>161</width>
        <height>61</height>

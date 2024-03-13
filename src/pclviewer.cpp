@@ -25,9 +25,14 @@ PCLViewer::PCLViewer (QWidget *parent) : QMainWindow (parent), ui (new Ui::PCLVi
 
   // 更新时间线程
   timeUpdater = new TimeUpdater(this);
-  connect(timeUpdater, &TimeUpdater::updateTimeSignal, this, &PCLViewer::receiveUpdateTime);
-  timeUpdater->start();
+  // 更新CPU使用率线程
+//  cpuMonitor = new CPUMonitor(this);
 
+  connect(timeUpdater, &TimeUpdater::updateTimeSignal, this, &PCLViewer::receiveUpdateTime);
+//  connect(cpuMonitor, &CPUMonitor::CPUMonitor, this, &PCLViewer::receiveUpdateTime);
+
+  timeUpdater->start();
+//  cpuMonitor->start();
 
   // Set up the QVTK window  
 #if VTK_MAJOR_VERSION > 8
@@ -87,7 +92,7 @@ void PCLViewer::connectCameraButton ()
     {
         // 相机连接异常，弹窗显示消息
         QMessageBox::critical(nullptr, "连接异常", "请检测相机连接是否正常.", QMessageBox::Ok);
-        qApp->quit();
+//        qApp->quit();
      }
      else
      {
@@ -101,6 +106,7 @@ void PCLViewer::connectCameraButton ()
         }
         else
         {
+            // 显示网口连接状态
             QString strTCP = "TCP Server\n";
             QString strTCPStatus = "设备已接入";
             QString strCameraTCP = strTCP + strTCPStatus;
@@ -114,6 +120,8 @@ void PCLViewer::connectCameraButton ()
                 // 连接成功，退出循环
                 std::cout << "连接成功" << std::endl;
                 ui->runStatus->setText("相机连接成功");
+
+                // 显示相机连接状态
                 QString strMAC = "主机序列号 \n";
                 QString strIP = "IP:  ";
                 QString strCameraStatus = " 已连接";
@@ -141,8 +149,10 @@ void PCLViewer::runButtonPressed ()
 {
     if (!camera_ok || cameraIP.isEmpty())
     {
-        // 用户取消输入，执行退出操作
-//            qApp->quit();
+        QMessageBox::critical(nullptr, "连接异常", "请检测相机连接是否正常.", QMessageBox::Ok);
+
+        // 没有连接相机时，不操作
+        //  qApp->quit();
     }
     else
     {

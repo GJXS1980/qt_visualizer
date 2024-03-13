@@ -15,6 +15,8 @@
 #include <QInputDialog>
 #include <QString>
 #include <QMessageBox>
+#include <QDebug>
+#include <QCoreApplication>
 
 // Point Cloud Library
 #include <pcl/point_cloud.h>
@@ -34,7 +36,37 @@
 typedef pcl::PointXYZRGBA PointT;
 typedef pcl::PointCloud<PointT> PointCloudT;
 
-// 定义获取系统时间并更新到UI的线程
+//// 更新CPU使用率
+//class CPUMonitor : public QObject
+//{
+//    Q_OBJECT
+
+//public:
+//    CPUMonitor(QObject *parent = nullptr) : QObject(parent)
+//    {
+//        // 创建定时器，每秒更新一次CPU使用率
+//        timer = new QTimer(this);
+//        connect(timer, &QTimer::timeout, this, &CPUMonitor::updateCPUUsage);
+//        timer->start(1000); // 每秒更新一次
+
+//        // 获取初始CPU使用率
+//        updateCPUUsage();
+//    }
+
+//public slots:
+//    void updateCPUUsage()
+//    {
+//        // 获取当前应用程序的CPU使用率
+//        double cpuUsage = QSystemInfo::currentCpuUsage();
+//        qDebug() << "Current CPU Usage: " << cpuUsage << "%";
+//    }
+
+//private:
+//    QTimer *timer;
+//};
+
+
+// 更新软件时间
 class TimeUpdater : public QThread
 {
     Q_OBJECT
@@ -105,6 +137,7 @@ namespace Ui
 {
   class PCLViewer;
   class TimeUpdater;
+//  class CPUMonitor;
 }
 
 
@@ -139,6 +172,8 @@ protected:
 private:
   Ui::PCLViewer *ui;
   TimeUpdater *timeUpdater;
+  // 创建CPUMonitor对象
+//  CPUMonitor *cpuMonitor;
 };
 
 
