@@ -20,7 +20,7 @@ else()
 endif()
 
 # 添加 .qrc 文件
-qt5_add_resources(QRC_FILES resource/mecheye_qt_visualizer.qrc)
+qt5_add_resources(QRC_FILES resource/mecheye_qt_visualizer.qrc resource/shader.qrc resource/texture.qrc)
 
 # Find PCL
 find_package(PCL REQUIRED)
@@ -83,6 +83,8 @@ add_executable(
                 src/main.cpp 
                 src/pclviewer.cpp
                 src/container.cpp
+                src/cube.cpp
+                src/window.cpp
               )
 
 target_link_libraries(
