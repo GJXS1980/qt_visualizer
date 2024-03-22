@@ -1,4 +1,5 @@
 #include "pclviewer.h"
+#include "container.h"
 #include <QApplication>
 #include <QMainWindow>
 
@@ -8,6 +9,7 @@ int main (int argc, char *argv[])
   PCLViewer w;
 
   w.show ();
+
 
   return a.exec ();
 }

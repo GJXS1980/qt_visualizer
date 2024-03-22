@@ -17,6 +17,7 @@
 #include <QMessageBox>
 #include <QDebug>
 #include <QCoreApplication>
+#include <QTcpSocket>
 
 // Point Cloud Library
 #include <pcl/point_cloud.h>
@@ -161,6 +162,16 @@ public Q_SLOTS:
   void updateTime();
   void receiveUpdateTime(const QString &currentTime);
   void connectCameraButton();
+  void connectRobotButton();
+//  void closeSocket(int socket);
+  void sendCommand(QTcpSocket& socket, const QString& command);
+//  void receiveResponse(int socket);
+  void TCP_connection(int port);
+
+private slots:
+    void on_TiaoZhuan_clicked();
+signals:
+    void sendData(QString data);
 
 protected:
   void refreshView();

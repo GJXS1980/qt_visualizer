@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Container</class>
+ <widget class="QMainWindow" name="Container">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QOpenGLWidget" name="openGLWidget">
+    <property name="geometry">
+     <rect>
+      <x>460</x>
+      <y>230</y>
+      <width>300</width>
+      <height>200</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>580</x>
+      <y>170</y>
+      <width>67</width>
+      <height>17</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>垛型显示</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="backButton">
+    <property name="geometry">
+     <rect>
+      <x>60</x>
+      <y>470</y>
+      <width>89</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>返回</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>800</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menu">
+    <property name="title">
+     <string>垛型设置</string>
+    </property>
+    <widget class="QMenu" name="menu_5">
+     <property name="title">
+      <string>类型</string>
+     </property>
+     <addaction name="action1"/>
+     <addaction name="action2"/>
+    </widget>
+    <widget class="QMenu" name="menu_6">
+     <property name="title">
+      <string>模式</string>
+     </property>
+     <addaction name="action"/>
+     <addaction name="action_2"/>
+    </widget>
+    <widget class="QMenu" name="menu_7">
+     <property name="title">
+      <string>导出</string>
+     </property>
+     <addaction name="action_3"/>
+     <addaction name="action_4"/>
+    </widget>
+    <addaction name="menu_5"/>
+    <addaction name="menu_6"/>
+    <addaction name="menu_7"/>
+    <addaction name="action_5"/>
+   </widget>
+   <widget class="QMenu" name="menu_2">
+    <property name="title">
+     <string>集装箱设置</string>
+    </property>
+    <widget class="QMenu" name="menu_10">
+     <property name="title">
+      <string>集装箱类型</string>
+     </property>
+     <addaction name="action_21"/>
+     <addaction name="action_40"/>
+     <addaction name="action_50"/>
+     <addaction name="action_41"/>
+     <addaction name="action_45"/>
+    </widget>
+    <addaction name="menu_10"/>
+    <addaction name="action_13"/>
+   </widget>
+   <widget class="QMenu" name="menu_3">
+    <property name="title">
+     <string>产品设置</string>
+    </property>
+    <widget class="QMenu" name="menu_8">
+     <property name="title">
+      <string>添加产品</string>
+     </property>
+     <addaction name="action_cm"/>
+     <addaction name="action_cm_2"/>
+     <addaction name="action_cm_4"/>
+     <addaction name="action_7"/>
+    </widget>
+    <addaction name="menu_8"/>
+    <addaction name="action_cm_3"/>
+   </widget>
+   <widget class="QMenu" name="menu_4">
+    <property name="title">
+     <string>夹具</string>
+    </property>
+    <widget class="QMenu" name="menu_9">
+     <property name="title">
+      <string>夹具模式</string>
+     </property>
+     <addaction name="action_10"/>
+     <addaction name="action_TCP_2"/>
+    </widget>
+    <widget class="QMenu" name="menu_TCP">
+     <property name="title">
+      <string>夹具TCP设置</string>
+     </property>
+     <widget class="QMenu" name="menuTCP0">
+      <property name="title">
+       <string>TCP0</string>
+      </property>
+      <addaction name="actionx"/>
+      <addaction name="actiony"/>
+      <addaction name="actionz"/>
+     </widget>
+     <addaction name="menuTCP0"/>
+     <addaction name="action_11"/>
+    </widget>
+    <addaction name="menu_9"/>
+    <addaction name="menu_TCP"/>
+   </widget>
+   <addaction name="menu"/>
+   <addaction name="menu_2"/>
+   <addaction name="menu_3"/>
+   <addaction name="menu_4"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <action name="action1">
+   <property name="text">
+    <string>专柜</string>
+   </property>
+  </action>
+  <action name="action2">
+   <property name="text">
+    <string>混码</string>
+   </property>
+  </action>
+  <action name="action">
+   <property name="text">
+    <string>自动生成</string>
+   </property>
+  </action>
+  <action name="action_2">
+   <property name="text">
+    <string>可编辑</string>
+   </property>
+  </action>
+  <action name="action_3">
+   <property name="text">
+    <string>导出位姿</string>
+   </property>
+  </action>
+  <action name="action_4">
+   <property name="text">
+    <string>导出图片</string>
+   </property>
+  </action>
+  <action name="action_5">
+   <property name="text">
+    <string>保存</string>
+   </property>
+  </action>
+  <action name="action_cm">
+   <property name="text">
+    <string>产品长度/cm</string>
+   </property>
+  </action>
+  <action name="action_cm_2">
+   <property name="text">
+    <string>产品宽度/cm</string>
+   </property>
+  </action>
+  <action name="action_cm_3">
+   <property name="text">
+    <string>导入产品</string>
+   </property>
+  </action>
+  <action name="action_cm_4">
+   <property name="text">
+    <string>产品高度/cm</string>
+   </property>
+  </action>
+  <action name="action_7">
+   <property name="text">
+    <string>产品数量/箱</string>
+   </property>
+  </action>
+  <action name="action_9">
+   <property name="text">
+    <string>多TCP模式</string>
+   </property>
+  </action>
+  <action name="action_10">
+   <property name="text">
+    <string>单一模式</string>
+   </property>
+  </action>
+  <action name="action_TCP_2">
+   <property name="text">
+    <string>多TCP模式</string>
+   </property>
+  </action>
+  <action name="action_11">
+   <property name="text">
+    <string>+</string>
+   </property>
+  </action>
+  <action name="actionx">
+   <property name="text">
+    <string>x偏移量/mm</string>
+   </property>
+  </action>
+  <action name="actiony">
+   <property name="text">
+    <string>y偏移量/mm</string>
+   </property>
+  </action>
+  <action name="actionz">
+   <property name="text">
+    <string>z偏移量/mm</string>
+   </property>
+  </action>
+  <action name="action_mm">
+   <property name="text">
+    <string>偏移量/mm</string>
+   </property>
+  </action>
+  <action name="action_13">
+   <property name="text">
+    <string>集装箱自定义约束</string>
+   </property>
+  </action>
+  <action name="action_20">
+   <property name="text">
+    <string>高柜45尺</string>
+   </property>
+  </action>
+  <action name="action_21">
+   <property name="text">
+    <string>标准20尺</string>
+   </property>
+  </action>
+  <action name="action_40">
+   <property name="text">
+    <string>标准40尺</string>
+   </property>
+  </action>
+  <action name="action_50">
+   <property name="text">
+    <string>标准50尺</string>
+   </property>
+  </action>
+  <action name="action_41">
+   <property name="text">
+    <string>高柜40尺</string>
+   </property>
+  </action>
+  <action name="action_45">
+   <property name="text">
+    <string>高柜45尺</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

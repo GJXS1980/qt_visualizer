@@ -1,5 +1,6 @@
 #include "pclviewer.h"
 #include "ui_pclviewer.h"
+#include "container.h"
 
 #include <opencv2/opencv.hpp>
 #include "area_scan_3d_camera/Camera.h"
@@ -8,6 +9,26 @@
 #if VTK_MAJOR_VERSION > 8
 #include <vtkGenericOpenGLRenderWindow.h>
 #endif
+
+#include <iostream>
+#include <cstring>
+#include <chrono>
+#include <future>
+#include <thread>
+#include <atomic>
+
+#include <boost/asio.hpp>
+
+#include <QTcpSocket>
+#include <QTcpServer>
+#include <QHostAddress>
+
+#define SERVER_IP "192.168.11.55"
+#define MOTION_PORT 31400
+#define STATUS_PORT 31401
+
+
+bool status_flag = false;
 
 mmind::eye::Camera mecheyecamera;
 //bool findCamera = true;
@@ -71,6 +92,13 @@ PCLViewer::PCLViewer (QWidget *parent) : QMainWindow (parent), ui (new Ui::PCLVi
   connect (ui->exitButton,  SIGNAL (clicked ()), this, SLOT (exitViewer ()));
   // 点击连接相机按钮
   connect (ui->connectCameraButton,  SIGNAL (clicked ()), this, SLOT (connectCameraButton ()));
+  // 点击连接机器人按钮
+  connect (ui->connectRobotButton,  SIGNAL (clicked ()), this, SLOT (connectRobotButton ()));
+
+  // 点击进入垛型编辑界面
+  connect (ui->conterButton,  SIGNAL (clicked ()), this, SLOT (on_TiaoZhuan_clicked ()));
+
+
 }
 
 
@@ -82,11 +110,9 @@ PCLViewer::PCLViewer (QWidget *parent) : QMainWindow (parent), ui (new Ui::PCLVi
  */
 void PCLViewer::connectCameraButton ()
 {
-
     // 搜索相机列表
     std::cout << "Discovering all available cameras..." << std::endl;
     std::vector<mmind::eye::CameraInfo> cameraInfoList = mmind::eye::Camera::discoverCameras();
-
 
     if (cameraInfoList.empty())
     {
@@ -137,6 +163,86 @@ void PCLViewer::connectCameraButton ()
        }
     }
 }
+
+
+/**
+ * @brief 连接机器人
+ *
+ * @param None
+ * @return None
+ */
+void PCLViewer::connectRobotButton ()
+{
+
+    // 创建 motionSocket
+    QTcpSocket* motionSocket = new QTcpSocket(this);
+    motionSocket->connectToHost(QHostAddress(SERVER_IP), MOTION_PORT);
+
+    if (!motionSocket->waitForConnected(3000))
+    {
+        std::cerr << "Error connecting to motion server" << std::endl;
+        delete motionSocket;
+        return;
+    }
+
+    // 发送切换机器人工具控制命令
+//    motionSocket.write("83,");
+//    motionSocket.waitForBytesWritten();
+    sendCommand(*motionSocket, "83,");
+    TCP_connection(STATUS_PORT);
+    // 显示相机连接状态
+
+
+
+    // 设置TCP
+//    motionSocket.write("6, 10, 10, 10, 0, 0, 0, 100, 100,");
+//    motionSocket.waitForBytesWritten();
+    sendCommand(*motionSocket, "6, 10, 10, 10, 0, 0, 0, 100, 100,");
+    std::this_thread::sleep_for(std::chrono::seconds(1)); // 延时5s
+
+    std::cout << "工具TCP: " << std::endl;
+    // 获取工具坐标系
+//    motionSocket.write("9,");
+//    motionSocket.waitForBytesWritten();
+    sendCommand(*motionSocket, "9,");
+
+    std::cout << "工具坐标: " << std::endl;
+    // 获取工件坐标系
+//    motionSocket.write("11,");
+//    motionSocket.waitForBytesWritten();
+    sendCommand(*motionSocket, "11,");
+
+
+    std::cout << "运动位姿: 224.917, 662.782, 384.972, -57.200, 176.259, -150.652" << std::endl;
+//    motionSocket.write("2, 224.917, 662.782, 384.972, -57.200, 176.259, -150.652, 50, 50, 50,");
+//    motionSocket.waitForBytesWritten();
+    sendCommand(*motionSocket, "2, 224.917, 662.782, 384.972, -57.200, 176.259, -150.652, 50, 50, 50,");
+
+    std::cout << "工具坐标: " << std::endl;
+    // 获取工件坐标系
+//    motionSocket.write("11,");
+//    motionSocket.waitForBytesWritten();
+    sendCommand(*motionSocket, "11,");
+
+    std::this_thread::sleep_for(std::chrono::seconds(1)); // 延时1s
+
+    // 关闭连接
+//    motionSocket.write("82,");
+//    motionSocket.waitForBytesWritten();
+    sendCommand(*motionSocket, "82,");
+
+    // 断开连接
+    motionSocket->disconnectFromHost();
+    delete motionSocket;
+
+    // 退出31401端口监听
+    status_flag = true;
+
+    QString strRobotStatus = " 机器人已断开";
+    ui->robotLabel->setText(strRobotStatus);
+    std::this_thread::sleep_for(std::chrono::seconds(5)); // 延时1s
+}
+
 
 
 /**
@@ -355,4 +461,109 @@ void PCLViewer::receiveUpdateTime(const QString &currentTime)
 }
 
 
+///**
+// * @brief 关闭socket函数
+// *
+// * @param socket socket_id
+// * @return None
+// */
+//void PCLViewer::closeSocket(int socket)
+//{
+//#ifdef _WIN32
+//    closesocket(socket);
+//    WSACleanup();
+//#else
+//    close(socket);
+//#endif
 
+//}
+
+///**
+// * @brief 发送命令函数
+// *
+// * @param socket socket的id
+// * @param command 控制指令
+// * @return None
+// */
+//void PCLViewer::sendCommand(int socket, const std::string& command)
+//{
+//    send(socket, command.c_str(), command.size(), 0);
+//}
+
+///**
+// * @brief 接收回复函数
+// *
+// * @param socket socket的id
+// * @return None
+// */
+//void PCLViewer::receiveResponse(int socket)
+//{
+//    char buffer[1024];
+//    memset(buffer, 0, sizeof(buffer));
+//    recv(socket, buffer, sizeof(buffer), 0);
+//    std::cout << "Received response: " << buffer << std::endl;
+//}
+
+/**
+ * @brief TCP连接
+ *
+ * @param port 端口
+ * @return None
+ */
+void PCLViewer::TCP_connection(int port)
+{
+    QString strRobotStatus = " 机器人已连接";
+    ui->robotLabel->setText(strRobotStatus);
+
+    QTcpSocket socket;
+    try
+    {
+        socket.connectToHost(QHostAddress(SERVER_IP), port);
+        if (!socket.waitForConnected(3000))
+        {
+            std::cerr << "Error connecting to server" << std::endl;
+            return;
+        }
+        else
+        {
+            if (status_flag)
+            {
+                socket.disconnectFromHost();
+                std::cout << "Discovering all available robot..." << std::endl;
+
+            }
+        }
+    }
+    catch (std::exception& e)
+    {
+        std::cerr << "Exception: " << e.what() << std::endl;
+    }
+}
+
+
+/**
+ * @brief 发送数据函数
+ *
+ * @param socket socket_id
+ * @param command 命令
+ * @return None
+ */
+void PCLViewer::sendCommand(QTcpSocket& socket, const QString& command)
+{
+    QByteArray data = command.toUtf8();
+    socket.write(data);
+    if (!socket.waitForBytesWritten(3000))
+    {
+        std::cerr << "Error: Failed to write data to socket" << std::endl;
+    }
+}
+
+void PCLViewer::on_TiaoZhuan_clicked()
+{
+   Container *aw = new Container();
+   connect(this, &PCLViewer::sendData, aw, &Container::getDataFromMainW);
+
+   aw->show();
+//   emit sendData("进入垛型软件编辑模式");
+   this->close();
+}

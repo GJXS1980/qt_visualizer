@@ -818,7 +818,7 @@ font: 75 11pt &quot;Ubuntu Condensed&quot;;</string>
       <string>相机未连接</string>
      </property>
     </widget>
-    <widget class="QLabel" name="label_28">
+    <widget class="QLabel" name="robotLabel">
      <property name="geometry">
       <rect>
        <x>380</x>
@@ -832,10 +832,10 @@ font: 75 11pt &quot;Ubuntu Condensed&quot;;</string>
 </string>
      </property>
      <property name="text">
-      <string>虚拟相机未连接</string>
+      <string>机器人未连接</string>
      </property>
     </widget>
-    <widget class="QLabel" name="TCPServer">
+    <widget class="QLabel" name="duoxin">
      <property name="geometry">
       <rect>
        <x>650</x>
@@ -849,7 +849,7 @@ font: 75 11pt &quot;Ubuntu Condensed&quot;;</string>
 </string>
      </property>
      <property name="text">
-      <string>TCP Server等待设备接入</string>
+      <string>垛型</string>
      </property>
     </widget>
     <widget class="QLabel" name="cpuStatus">
@@ -866,15 +866,15 @@ font: 75 11pt &quot;Ubuntu Condensed&quot;;</string>
 </string>
      </property>
      <property name="text">
-      <string>CPU使用率</string>
+      <string>CPU使用率/GPU使用率</string>
      </property>
     </widget>
-    <widget class="QLabel" name="label_31">
+    <widget class="QLabel" name="TCPServer">
      <property name="geometry">
       <rect>
-       <x>1210</x>
+       <x>1200</x>
        <y>20</y>
-       <width>141</width>
+       <width>171</width>
        <height>51</height>
       </rect>
      </property>
@@ -883,15 +883,15 @@ font: 75 11pt &quot;Ubuntu Condensed&quot;;</string>
 </string>
      </property>
      <property name="text">
-      <string>GPU使用率</string>
+      <string>TCP Server等待设备接入</string>
      </property>
     </widget>
     <widget class="QLabel" name="label_32">
      <property name="geometry">
       <rect>
-       <x>1440</x>
+       <x>1460</x>
        <y>20</y>
-       <width>161</width>
+       <width>141</width>
        <height>51</height>
       </rect>
      </property>
@@ -935,7 +935,7 @@ font: 75 11pt &quot;Ubuntu Condensed&quot;;</string>
       </size>
      </property>
     </widget>
-    <widget class="QPushButton" name="exitButton_3">
+    <widget class="QPushButton" name="connectRobotButton">
      <property name="geometry">
       <rect>
        <x>290</x>
@@ -958,7 +958,7 @@ font: 75 11pt &quot;Ubuntu Condensed&quot;;</string>
      </property>
      <property name="icon">
       <iconset resource="../resource/mecheye_qt_visualizer.qrc">
-       <normaloff>:/images/images/hardware_virtualcamera.png</normaloff>:/images/images/hardware_virtualcamera.png</iconset>
+       <normaloff>:/images/images/group_Robot.png</normaloff>:/images/images/group_Robot.png</iconset>
      </property>
      <property name="iconSize">
       <size>
@@ -967,7 +967,7 @@ font: 75 11pt &quot;Ubuntu Condensed&quot;;</string>
       </size>
      </property>
     </widget>
-    <widget class="QPushButton" name="exitButton_4">
+    <widget class="QPushButton" name="conterButton">
      <property name="geometry">
       <rect>
        <x>570</x>
@@ -990,7 +990,7 @@ font: 75 11pt &quot;Ubuntu Condensed&quot;;</string>
      </property>
      <property name="icon">
       <iconset resource="../resource/mecheye_qt_visualizer.qrc">
-       <normaloff>:/images/images/hardware_hub.png</normaloff>:/images/images/hardware_hub.png</iconset>
+       <normaloff>:/images/images/mixed_pallet.png</normaloff>:/images/images/mixed_pallet.png</iconset>
      </property>
      <property name="iconSize">
       <size>
@@ -1054,7 +1054,7 @@ font: 75 11pt &quot;Ubuntu Condensed&quot;;</string>
      </property>
      <property name="icon">
       <iconset resource="../resource/mecheye_qt_visualizer.qrc">
-       <normaloff>:/images/images/hardware_gpu.png</normaloff>:/images/images/hardware_gpu.png</iconset>
+       <normaloff>:/images/images/hardware_hub.png</normaloff>:/images/images/hardware_hub.png</iconset>
      </property>
      <property name="iconSize">
       <size>
@@ -1066,7 +1066,7 @@ font: 75 11pt &quot;Ubuntu Condensed&quot;;</string>
     <widget class="QPushButton" name="exitButton_7">
      <property name="geometry">
       <rect>
-       <x>1360</x>
+       <x>1380</x>
        <y>10</y>
        <width>71</width>
        <height>71</height>

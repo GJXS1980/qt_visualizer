@@ -11,9 +11,9 @@ set(CMAKE_AUTOUIC ON) # UI files
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 # Find the QtWidgets library
-find_package(Qt6 QUIET COMPONENTS Concurrent OpenGL Widgets)
+find_package(Qt6 QUIET COMPONENTS Concurrent OpenGL Widgets  Core Network)
 if (NOT Qt6_FOUND)
-  find_package(Qt5 COMPONENTS Concurrent OpenGL Widgets REQUIRED)
+  find_package(Qt5 COMPONENTS Concurrent OpenGL Widgets  Core Network REQUIRED)
   set(QTX Qt5)
 else()
   set(QTX Qt6)
@@ -82,12 +82,15 @@ add_executable(
                 ${QRC_FILES} 
                 src/main.cpp 
                 src/pclviewer.cpp
+                src/container.cpp
               )
 
 target_link_libraries(
                         ${PROJECT_NAME} 
                         ${PCL_LIBRARIES} 
                         ${QTX}::Widgets 
+                        ${QTX}::Core
+                        ${QTX}::Network 
                         ${MECHEYEAPI_LIBRARIES} 
                         ${OpenCV_LIBS}
                         ${CMAKE_CURRENT_SOURCE_DIR}/include
