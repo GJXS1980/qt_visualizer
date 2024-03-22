@@ -97,7 +97,7 @@ PCLViewer::PCLViewer (QWidget *parent) : QMainWindow (parent), ui (new Ui::PCLVi
 
   // 点击进入垛型编辑界面
   connect (ui->conterButton,  SIGNAL (clicked ()), this, SLOT (on_TiaoZhuan_clicked ()));
-
+//  connect(this, SIGNAL(sendData(QString)), ui->conterButton, SLOT(getDataFromMainW(QString)));
 
 }
 
@@ -460,50 +460,6 @@ void PCLViewer::receiveUpdateTime(const QString &currentTime)
     ui->timeLabel->setText(currentTime);
 }
 
-
-///**
-// * @brief 关闭socket函数
-// *
-// * @param socket socket_id
-// * @return None
-// */
-//void PCLViewer::closeSocket(int socket)
-//{
-//#ifdef _WIN32
-//    closesocket(socket);
-//    WSACleanup();
-//#else
-//    close(socket);
-//#endif
-
-//}
-
-///**
-// * @brief 发送命令函数
-// *
-// * @param socket socket的id
-// * @param command 控制指令
-// * @return None
-// */
-//void PCLViewer::sendCommand(int socket, const std::string& command)
-//{
-//    send(socket, command.c_str(), command.size(), 0);
-//}
-
-///**
-// * @brief 接收回复函数
-// *
-// * @param socket socket的id
-// * @return None
-// */
-//void PCLViewer::receiveResponse(int socket)
-//{
-//    char buffer[1024];
-//    memset(buffer, 0, sizeof(buffer));
-//    recv(socket, buffer, sizeof(buffer), 0);
-//    std::cout << "Received response: " << buffer << std::endl;
-//}
-
 /**
  * @brief TCP连接
  *
@@ -560,10 +516,10 @@ void PCLViewer::sendCommand(QTcpSocket& socket, const QString& command)
 
 void PCLViewer::on_TiaoZhuan_clicked()
 {
-   Container *aw = new Container();
-   connect(this, &PCLViewer::sendData, aw, &Container::getDataFromMainW);
-
-   aw->show();
-//   emit sendData("进入垛型软件编辑模式");
-   this->close();
+    Container *aw = new Container(); // 创建界面A的实例
+    connect(aw, &Container::returnToMain, this, &PCLViewer::show); // 连接界面A的返回主界面信号和主界面的显示槽函数
+    aw->show(); // 显示界面A
+    this->hide(); // 隐藏主界面
 }
+
+

@@ -20,6 +20,10 @@ public slots:
 
 private slots:
     void on_Return_clicked();
+    void on_TiaoZhuan_clicked(); // 添加新的槽函数声明
+
+signals:
+    void returnToMain(); // 声明返回主界面的信号
 
 private:
     Ui::Container *ui;

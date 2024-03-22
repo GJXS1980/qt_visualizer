@@ -168,8 +168,10 @@ public Q_SLOTS:
 //  void receiveResponse(int socket);
   void TCP_connection(int port);
 
-private slots:
+//private slots:
     void on_TiaoZhuan_clicked();
+    void returnToMain(); // 添加返回主界面的槽函数
+
 signals:
     void sendData(QString data);
 

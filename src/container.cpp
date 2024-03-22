@@ -24,9 +24,29 @@ void Container::getDataFromMainW(QString data)
     mes.exec();
 }
 
+//void Container::on_Return_clicked()
+//{
+//    PCLViewer *mw = new PCLViewer();
+//    mw->show();
+//    this->hide();
+//}
+
+
+
 void Container::on_Return_clicked()
 {
-    PCLViewer *mw = new PCLViewer();
-    mw->show();
-    this->close();
+    emit returnToMain(); // 发送返回主界面的信号
+    this->hide(); // 隐藏界面A
+}
+
+
+void PCLViewer::returnToMain()
+{
+    this->show(); // 显示主界面
+}
+
+void Container::on_TiaoZhuan_clicked()
+{
+    emit returnToMain(); // 发送返回主界面的信号
+    this->hide(); // 隐藏界面A
 }
