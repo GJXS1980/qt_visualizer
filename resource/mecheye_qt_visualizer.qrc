@@ -19,6 +19,19 @@
     <file>images/group_Robot.png</file>
     <file>images/mixed_pallet.png</file>
 
+    <file>container_images/container.png</file>
+    <file>container_images/container_type.png</file>
+    <file>container_images/container_XY.png</file>
+    <file>container_images/export.png</file>
+    <file>container_images/fixture.png</file>
+    <file>container_images/fixture_mode.png</file>
+    <file>container_images/fixture_settings.png</file>
+    <file>container_images/model.png</file>
+    <file>container_images/product.png</file>
+    <file>container_images/save.png</file>
+    <file>container_images/stacking_type.png</file>
+    <file>container_images/type.png</file> 
+  
   </qresource>
 </RCC>
 

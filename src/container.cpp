@@ -14,7 +14,7 @@ Container::Container(QWidget *parent) :
 {
     ui->setupUi(this);
     connect (ui->backButton,  SIGNAL (clicked ()), this, SLOT (on_Return_clicked ()));
-    connect (ui->pushButton,  SIGNAL (clicked ()), this, SLOT (show_cube ()));
+    connect (ui->container_20,  SIGNAL (triggered ()), this, SLOT (show_cube ()));
 
 
 }
@@ -36,9 +36,9 @@ void Container::show_cube()
     // 创建一个OpenGL窗口并显示立方体
     Window *win = new Window(this);
     // 创建一个布局，并将窗口添加到布局中
-    QVBoxLayout *layout = new QVBoxLayout(ui->demoShow);
+    QVBoxLayout *layout = new QVBoxLayout(ui->containerShow);
     layout->addWidget(win);
-    ui->demoShow->setLayout(layout);
+    ui->containerShow->setLayout(layout);
 
     // 显示 OpenGL 窗口
     win->show();

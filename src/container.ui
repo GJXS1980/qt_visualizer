@@ -17,16 +17,84 @@
    </sizepolicy>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>垛型生成界面</string>
   </property>
   <widget class="QWidget" name="centralwidget">
+   <widget class="QOpenGLWidget" name="containerShow">
+    <property name="geometry">
+     <rect>
+      <x>600</x>
+      <y>90</y>
+      <width>831</width>
+      <height>351</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QOpenGLWidget" name="containerShow_2">
+    <property name="geometry">
+     <rect>
+      <x>610</x>
+      <y>530</y>
+      <width>831</width>
+      <height>581</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QFrame" name="frame">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>40</y>
+      <width>421</width>
+      <height>981</height>
+     </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+    <widget class="QFrame" name="frame_4">
+     <property name="geometry">
+      <rect>
+       <x>-50</x>
+       <y>240</y>
+       <width>901</width>
+       <height>411</height>
+      </rect>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QFrame" name="frame_2">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>1080</y>
+      <width>111</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+   </widget>
    <widget class="QPushButton" name="backButton">
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>1100</y>
-      <width>89</width>
-      <height>25</height>
+      <y>1080</y>
+      <width>111</width>
+      <height>41</height>
      </rect>
     </property>
     <property name="sizePolicy">
@@ -38,28 +106,43 @@
     <property name="text">
      <string>返回主界面</string>
     </property>
-   </widget>
-   <widget class="QOpenGLWidget" name="demoShow">
-    <property name="geometry">
-     <rect>
-      <x>570</x>
-      <y>220</y>
-      <width>1001</width>
-      <height>841</height>
-     </rect>
+    <property name="icon">
+     <iconset>
+      <normaloff>:/images/container_images/container.png</normaloff>:/images/container_images/container.png</iconset>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QTextEdit" name="textEdit">
     <property name="geometry">
      <rect>
-      <x>570</x>
-      <y>150</y>
-      <width>111</width>
-      <height>41</height>
+      <x>600</x>
+      <y>50</y>
+      <width>131</width>
+      <height>31</height>
      </rect>
     </property>
-    <property name="text">
-     <string>显示集装箱</string>
+    <property name="html">
+     <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Ubuntu'; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;集装箱显示区域&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+   </widget>
+   <widget class="QTextEdit" name="textEdit_2">
+    <property name="geometry">
+     <rect>
+      <x>610</x>
+      <y>480</y>
+      <width>131</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="html">
+     <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Ubuntu'; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;垛型显示区域&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
   </widget>
@@ -86,6 +169,10 @@
      <property name="title">
       <string>类型</string>
      </property>
+     <property name="icon">
+      <iconset>
+       <normaloff>:/images/container_images/stacking_type.png</normaloff>:/images/container_images/stacking_type.png</iconset>
+     </property>
      <addaction name="action1"/>
      <addaction name="action2"/>
     </widget>
@@ -93,12 +180,20 @@
      <property name="title">
       <string>模式</string>
      </property>
+     <property name="icon">
+      <iconset>
+       <normaloff>:/images/container_images/model.png</normaloff>:/images/container_images/model.png</iconset>
+     </property>
      <addaction name="action"/>
      <addaction name="action_2"/>
     </widget>
     <widget class="QMenu" name="menu_7">
      <property name="title">
       <string>导出</string>
+     </property>
+     <property name="icon">
+      <iconset>
+       <normaloff>:/images/container_images/export.png</normaloff>:/images/container_images/export.png</iconset>
      </property>
      <addaction name="action_3"/>
      <addaction name="action_4"/>
@@ -122,7 +217,11 @@
      <property name="title">
       <string>集装箱类型</string>
      </property>
-     <addaction name="action_21"/>
+     <property name="icon">
+      <iconset>
+       <normaloff>:/images/container_images/container_type.png</normaloff>:/images/container_images/container_type.png</iconset>
+     </property>
+     <addaction name="container_20"/>
      <addaction name="action_40"/>
      <addaction name="action_50"/>
      <addaction name="action_41"/>
@@ -144,6 +243,10 @@
      </property>
      <property name="title">
       <string>添加产品</string>
+     </property>
+     <property name="icon">
+      <iconset>
+       <normaloff>:/images/container_images/product.png</normaloff>:/images/container_images/product.png</iconset>
      </property>
      <addaction name="action_cm"/>
      <addaction name="action_cm_2"/>
@@ -167,12 +270,20 @@
      <property name="title">
       <string>夹具模式</string>
      </property>
+     <property name="icon">
+      <iconset>
+       <normaloff>:/images/container_images/fixture_mode.png</normaloff>:/images/container_images/fixture_mode.png</iconset>
+     </property>
      <addaction name="action_10"/>
      <addaction name="action_TCP_2"/>
     </widget>
     <widget class="QMenu" name="menu_TCP">
      <property name="title">
       <string>夹具TCP设置</string>
+     </property>
+     <property name="icon">
+      <iconset>
+       <normaloff>:/images/container_images/fixture_settings.png</normaloff>:/images/container_images/fixture_settings.png</iconset>
      </property>
      <widget class="QMenu" name="menuTCP0">
       <property name="title">
@@ -304,7 +415,7 @@
     <string>高柜45尺</string>
    </property>
   </action>
-  <action name="action_21">
+  <action name="container_20">
    <property name="text">
     <string>标准20尺</string>
    </property>
