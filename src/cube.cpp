@@ -15,23 +15,40 @@ struct VertexData
 // 立方体有8个顶点
 // 顶点的顺序对于后面定义面是重要的
 const QVector3D Coords[] = {
-	// v1 front top left
-	QVector3D(-1.0f, 1.0f, 1.0f),
-	// v2 front top right
-	QVector3D(1.0f, 1.0f, 1.0f),
-	// v3 front bottom left
-	QVector3D(-1.0f, -1.0f, 1.0f),
-	// v4 front bottom right
-	QVector3D(1.0f, -1.0f, 1.0f),
+//	// v1 front top left
+//	QVector3D(-1.0f, 1.0f, 1.0f),
+//	// v2 front top right
+//	QVector3D(1.0f, 1.0f, 1.0f),
+//	// v3 front bottom left
+//	QVector3D(-1.0f, -1.0f, 1.0f),
+//	// v4 front bottom right
+//	QVector3D(1.0f, -1.0f, 1.0f),
 
-	// v5 back top left
-	QVector3D(-1.0f, 1.0f, -1.0f),
-	// v6 back top right
-	QVector3D(1.0f, 1.0f, -1.0f),
-	// v7 back bottom left
-	QVector3D(-1.0f, -1.0f, -1.0f),
-	// v8 back bottom right
-	QVector3D(1.0f, -1.0f, -1.0f),
+//	// v5 back top left
+//	QVector3D(-1.0f, 1.0f, -1.0f),
+//	// v6 back top right
+//	QVector3D(1.0f, 1.0f, -1.0f),
+//	// v7 back bottom left
+//	QVector3D(-1.0f, -1.0f, -1.0f),
+//	// v8 back bottom right
+//	QVector3D(1.0f, -1.0f, -1.0f),
+    // v1 front top left
+    QVector3D(-2.0f, 1.0f, 1.0f),
+    // v2 front top right
+    QVector3D(2.0f, 1.0f, 1.0f),
+    // v3 front bottom left
+    QVector3D(-2.0f, -1.0f, 1.0f),
+    // v4 front bottom right
+    QVector3D(2.0f, -1.0f, 1.0f),
+
+    // v5 back top left
+    QVector3D(-2.0f, 1.0f, -1.0f),
+    // v6 back top right
+    QVector3D(2.0f, 1.0f, -1.0f),
+    // v7 back bottom left
+    QVector3D(-2.0f, -1.0f, -1.0f),
+    // v8 back bottom right
+    QVector3D(2.0f, -1.0f, -1.0f),
 };
 
 // 立方体每个角的索引枚举
@@ -97,42 +114,79 @@ void Cube::initCube()
 	// duplicate vertex for each face because texture coordinate
 	// is different.
 	VertexData vertices[] = {
-		// Vertex data for face 0
-		{ QVector3D(-1.0f, -1.0f, 1.0f), QVector2D(0.0f, 0.0f) }, // v0
-		{ QVector3D(1.0f, -1.0f, 1.0f), QVector2D(0.33f, 0.0f) }, // v1
-		{ QVector3D(-1.0f, 1.0f, 1.0f), QVector2D(0.0f, 0.5f) },  // v2
-		{ QVector3D(1.0f, 1.0f, 1.0f), QVector2D(0.33f, 0.5f) },  // v3
+//		// Vertex data for face 0
+//		{ QVector3D(-1.0f, -1.0f, 1.0f), QVector2D(0.0f, 0.0f) }, // v0
+//		{ QVector3D(1.0f, -1.0f, 1.0f), QVector2D(0.33f, 0.0f) }, // v1
+//		{ QVector3D(-1.0f, 1.0f, 1.0f), QVector2D(0.0f, 0.5f) },  // v2
+//		{ QVector3D(1.0f, 1.0f, 1.0f), QVector2D(0.33f, 0.5f) },  // v3
 
-		// Vertex data for face 1
-		{ QVector3D(1.0f, -1.0f, 1.0f), QVector2D(0.0f, 0.5f) },   // v4
-		{ QVector3D(1.0f, -1.0f, -1.0f), QVector2D(0.33f, 0.5f) }, // v5
-		{ QVector3D(1.0f, 1.0f, 1.0f), QVector2D(0.0f, 1.0f) },	   // v6
-		{ QVector3D(1.0f, 1.0f, -1.0f), QVector2D(0.33f, 1.0f) },  // v7
+//		// Vertex data for face 1
+//		{ QVector3D(1.0f, -1.0f, 1.0f), QVector2D(0.0f, 0.5f) },   // v4
+//		{ QVector3D(1.0f, -1.0f, -1.0f), QVector2D(0.33f, 0.5f) }, // v5
+//		{ QVector3D(1.0f, 1.0f, 1.0f), QVector2D(0.0f, 1.0f) },	   // v6
+//		{ QVector3D(1.0f, 1.0f, -1.0f), QVector2D(0.33f, 1.0f) },  // v7
 
-		// Vertex data for face 2
-		{ QVector3D(1.0f, -1.0f, -1.0f), QVector2D(0.66f, 0.5f) }, // v8
-		{ QVector3D(-1.0f, -1.0f, -1.0f), QVector2D(1.0f, 0.5f) }, // v9
-		{ QVector3D(1.0f, 1.0f, -1.0f), QVector2D(0.66f, 1.0f) },  // v10
-		{ QVector3D(-1.0f, 1.0f, -1.0f), QVector2D(1.0f, 1.0f) },  // v11
+//		// Vertex data for face 2
+//		{ QVector3D(1.0f, -1.0f, -1.0f), QVector2D(0.66f, 0.5f) }, // v8
+//		{ QVector3D(-1.0f, -1.0f, -1.0f), QVector2D(1.0f, 0.5f) }, // v9
+//		{ QVector3D(1.0f, 1.0f, -1.0f), QVector2D(0.66f, 1.0f) },  // v10
+//		{ QVector3D(-1.0f, 1.0f, -1.0f), QVector2D(1.0f, 1.0f) },  // v11
 
-		// Vertex data for face 3
-		{ QVector3D(-1.0f, -1.0f, -1.0f), QVector2D(0.66f, 0.0f) }, // v12
-		{ QVector3D(-1.0f, -1.0f, 1.0f), QVector2D(1.0f, 0.0f) },	// v13
-		{ QVector3D(-1.0f, 1.0f, -1.0f), QVector2D(0.66f, 0.5f) },	// v14
-		{ QVector3D(-1.0f, 1.0f, 1.0f), QVector2D(1.0f, 0.5f) },	// v15
+//		// Vertex data for face 3
+//		{ QVector3D(-1.0f, -1.0f, -1.0f), QVector2D(0.66f, 0.0f) }, // v12
+//		{ QVector3D(-1.0f, -1.0f, 1.0f), QVector2D(1.0f, 0.0f) },	// v13
+//		{ QVector3D(-1.0f, 1.0f, -1.0f), QVector2D(0.66f, 0.5f) },	// v14
+//		{ QVector3D(-1.0f, 1.0f, 1.0f), QVector2D(1.0f, 0.5f) },	// v15
 
-		// Vertex data for face 4
-		{ QVector3D(-1.0f, -1.0f, -1.0f), QVector2D(0.33f, 0.0f) }, // v16
-		{ QVector3D(1.0f, -1.0f, -1.0f), QVector2D(0.66f, 0.0f) },	// v17
-		{ QVector3D(-1.0f, -1.0f, 1.0f), QVector2D(0.33f, 0.5f) },	// v18
-		{ QVector3D(1.0f, -1.0f, 1.0f), QVector2D(0.66f, 0.5f) },	// v19
+//		// Vertex data for face 4
+//		{ QVector3D(-1.0f, -1.0f, -1.0f), QVector2D(0.33f, 0.0f) }, // v16
+//		{ QVector3D(1.0f, -1.0f, -1.0f), QVector2D(0.66f, 0.0f) },	// v17
+//		{ QVector3D(-1.0f, -1.0f, 1.0f), QVector2D(0.33f, 0.5f) },	// v18
+//		{ QVector3D(1.0f, -1.0f, 1.0f), QVector2D(0.66f, 0.5f) },	// v19
 
-		// Vertex data for face 5
-		{ QVector3D(-1.0f, 1.0f, 1.0f), QVector2D(0.33f, 0.5f) },  // v20
-		{ QVector3D(1.0f, 1.0f, 1.0f), QVector2D(0.66f, 0.5f) },   // v21
-		{ QVector3D(-1.0f, 1.0f, -1.0f), QVector2D(0.33f, 1.0f) }, // v22
-		{ QVector3D(1.0f, 1.0f, -1.0f), QVector2D(0.66f, 1.0f) }   // v23
-	};
+//		// Vertex data for face 5
+//		{ QVector3D(-1.0f, 1.0f, 1.0f), QVector2D(0.33f, 0.5f) },  // v20
+//		{ QVector3D(1.0f, 1.0f, 1.0f), QVector2D(0.66f, 0.5f) },   // v21
+//		{ QVector3D(-1.0f, 1.0f, -1.0f), QVector2D(0.33f, 1.0f) }, // v22
+//		{ QVector3D(1.0f, 1.0f, -1.0f), QVector2D(0.66f, 1.0f) }   // v23
+
+        // Vertex data for face 0
+        { QVector3D(-1.5f, -1.0f, 1.0f), QVector2D(0.0f, 0.0f) }, // v0
+        { QVector3D(1.5f, -1.0f, 1.0f), QVector2D(0.33f, 0.0f) }, // v1
+        { QVector3D(-1.5f, 1.0f, 1.0f), QVector2D(0.0f, 0.5f) },  // v2
+        { QVector3D(1.5f, 1.0f, 1.0f), QVector2D(0.33f, 0.5f) },  // v3
+
+        // Vertex data for face 1
+        { QVector3D(1.5f, -1.0f, 1.0f), QVector2D(0.0f, 0.5f) },   // v4
+        { QVector3D(1.5f, -1.0f, -1.0f), QVector2D(0.33f, 0.5f) }, // v5
+        { QVector3D(1.5f, 1.0f, 1.0f), QVector2D(0.0f, 1.0f) },	   // v6
+        { QVector3D(1.5f, 1.0f, -1.0f), QVector2D(0.33f, 1.0f) },  // v7
+
+        // Vertex data for face 2
+        { QVector3D(1.5f, -1.0f, -1.0f), QVector2D(0.66f, 0.5f) }, // v8
+        { QVector3D(-1.5f, -1.0f, -1.0f), QVector2D(1.0f, 0.5f) }, // v9
+        { QVector3D(1.5f, 1.0f, -1.0f), QVector2D(0.66f, 1.0f) },  // v10
+        { QVector3D(-1.5f, 1.0f, -1.0f), QVector2D(1.0f, 1.0f) },  // v11
+
+        // Vertex data for face 3
+        { QVector3D(-1.5f, -1.0f, -1.0f), QVector2D(0.66f, 0.0f) }, // v12
+        { QVector3D(-1.5f, -1.0f, 1.0f), QVector2D(1.0f, 0.0f) },	// v13
+        { QVector3D(-1.5f, 1.0f, -1.0f), QVector2D(0.66f, 0.5f) },	// v14
+        { QVector3D(-1.5f, 1.0f, 1.0f), QVector2D(1.0f, 0.5f) },	// v15
+
+        // Vertex data for face 4
+        { QVector3D(-1.5f, -1.0f, -1.0f), QVector2D(0.33f, 0.0f) }, // v16
+        { QVector3D(1.5f, -1.0f, -1.0f), QVector2D(0.66f, 0.0f) },	// v17
+        { QVector3D(-1.5f, -1.0f, 1.0f), QVector2D(0.33f, 0.5f) },	// v18
+        { QVector3D(1.5f, -1.0f, 1.0f), QVector2D(0.66f, 0.5f) },	// v19
+
+        // Vertex data for face 5
+        { QVector3D(-1.5f, 1.0f, 1.0f), QVector2D(0.33f, 0.5f) },  // v20
+        { QVector3D(1.5f, 1.0f, 1.0f), QVector2D(0.66f, 0.5f) },   // v21
+        { QVector3D(-1.5f, 1.0f, -1.0f), QVector2D(0.33f, 1.0f) }, // v22
+        { QVector3D(1.5f, 1.0f, -1.0f), QVector2D(0.66f, 1.0f) }   // v23
+
+    };
 
 	// Indices for drawing cube faces using triangle strips.
 	// Triangle strips can be connected by duplicating indices

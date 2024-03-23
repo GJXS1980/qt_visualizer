@@ -66,7 +66,9 @@ void Window::initializeGL()
 {
     initializeOpenGLFunctions();    // 初始化OpenGL函数
 
-    glClearColor(0, 0, 0, 1);   // 设置清屏颜色为黑色
+//    glClearColor(0, 0, 0, 1);   // 设置清屏颜色为黑色
+    glClearColor(0.0f, 0.2f, 0.6f, 1.0f); // 设置清屏颜色为科技蓝
+
 
     initShaders();  // 初始化着色器
     initTextures(); // 初始化纹理

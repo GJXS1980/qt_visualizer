@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1107</width>
-    <height>805</height>
+    <width>1580</width>
+    <height>1190</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -20,46 +20,11 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QOpenGLWidget" name="openGLWidget">
-    <property name="geometry">
-     <rect>
-      <x>760</x>
-      <y>410</y>
-      <width>300</width>
-      <height>200</height>
-     </rect>
-    </property>
-    <property name="sizePolicy">
-     <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-      <horstretch>0</horstretch>
-      <verstretch>0</verstretch>
-     </sizepolicy>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label">
-    <property name="geometry">
-     <rect>
-      <x>860</x>
-      <y>340</y>
-      <width>67</width>
-      <height>17</height>
-     </rect>
-    </property>
-    <property name="sizePolicy">
-     <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
-      <horstretch>0</horstretch>
-      <verstretch>0</verstretch>
-     </sizepolicy>
-    </property>
-    <property name="text">
-     <string>垛型显示</string>
-    </property>
-   </widget>
    <widget class="QPushButton" name="backButton">
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>710</y>
+      <y>1100</y>
       <width>89</width>
       <height>25</height>
      </rect>
@@ -71,45 +36,26 @@
      </sizepolicy>
     </property>
     <property name="text">
-     <string>返回</string>
+     <string>返回主界面</string>
     </property>
    </widget>
    <widget class="QOpenGLWidget" name="demoShow">
     <property name="geometry">
      <rect>
-      <x>110</x>
-      <y>230</y>
-      <width>300</width>
-      <height>200</height>
+      <x>570</x>
+      <y>220</y>
+      <width>1001</width>
+      <height>841</height>
      </rect>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_2">
-    <property name="geometry">
-     <rect>
-      <x>210</x>
-      <y>440</y>
-      <width>91</width>
-      <height>17</height>
-     </rect>
-    </property>
-    <property name="sizePolicy">
-     <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
-      <horstretch>0</horstretch>
-      <verstretch>0</verstretch>
-     </sizepolicy>
-    </property>
-    <property name="text">
-     <string>集装箱显示</string>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton">
     <property name="geometry">
      <rect>
-      <x>110</x>
-      <y>180</y>
-      <width>89</width>
-      <height>25</height>
+      <x>570</x>
+      <y>150</y>
+      <width>111</width>
+      <height>41</height>
      </rect>
     </property>
     <property name="text">
@@ -122,7 +68,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1107</width>
+     <width>1580</width>
      <height>28</height>
     </rect>
    </property>
