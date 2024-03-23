@@ -14,13 +14,16 @@ class Container : public QMainWindow
 public:
     explicit Container(QWidget *parent = nullptr);
     ~Container();
+    void returnToConter();
 
 public slots:
     void getDataFromMainW(QString data);
+    void show_cube();
+
 
 private slots:
     void on_Return_clicked();
-    void on_TiaoZhuan_clicked(); // 添加新的槽函数声明
+//    void on_TiaoZhuan_clicked(); // 添加新的槽函数声明
 
 signals:
     void returnToMain(); // 声明返回主界面的信号

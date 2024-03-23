@@ -174,6 +174,7 @@ public Q_SLOTS:
 
 signals:
     void sendData(QString data);
+    void returnToConter();
 
 protected:
   void refreshView();

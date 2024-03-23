@@ -5,10 +5,15 @@
 #define GET_ARRAY_LEN(array) (sizeof(array) / sizeof(array[0]))
 struct VertexData
 {
-	QVector3D position;
-	QVector2D texCoord;
+    QVector3D position; // 顶点位置
+    QVector2D texCoord; // 纹理坐标
 };
 
+
+// 立方体每个顶点的坐标
+// 每个顶点用一个QVector3D表示
+// 立方体有8个顶点
+// 顶点的顺序对于后面定义面是重要的
 const QVector3D Coords[] = {
 	// v1 front top left
 	QVector3D(-1.0f, 1.0f, 1.0f),
@@ -28,6 +33,9 @@ const QVector3D Coords[] = {
 	// v8 back bottom right
 	QVector3D(1.0f, -1.0f, -1.0f),
 };
+
+// 立方体每个角的索引枚举
+// 这提供了一种通过名称引用顶点的方法
 enum
 {
 	COORD_F_T_L = 0,
@@ -51,6 +59,11 @@ enum
 	v7,
 	v8
 };
+
+// Cube类的构造函数
+// 初始化OpenGL函数
+// 创建顶点缓冲对象（VBOs）
+// 初始化立方体几何结构
 Cube::Cube()
 	: indexBuf(QOpenGLBuffer::IndexBuffer)
 {
@@ -63,12 +76,20 @@ Cube::Cube()
 	// Initializes cube geometry and transfers it to VBOs
 	initCube();
 }
+
+// Cube类的析构函数
+// 销毁VBOs
 Cube::~Cube()
 {
 	arrayBuf.destroy();
 	indexBuf.destroy();
 }
 
+// 初始化立方体几何结构的函数
+// 创建立方体的顶点和索引
+// 顶点被定义为具有相应纹理坐标的QVector3D位置
+// 索引定义顶点绘制的顺序以形成立方体的面
+// 顶点和索引存储在顶点缓冲对象（VBOs）中
 void Cube::initCube()
 {
 #if 1
@@ -192,6 +213,12 @@ void Cube::initCube()
 	indexBuf.allocate(indices, GET_ARRAY_LEN(indices) * sizeof(GLushort));
 #endif
 }
+
+
+// 绘制立方体的函数
+// 绑定顶点缓冲对象（VBOs）
+// 指定如何解释顶点数据
+// 使用OpenGL命令绘制立方体几何结构
 void Cube::drawCube(QOpenGLShaderProgram* program)
 {
 	// Tell OpenGL which VBOs to use

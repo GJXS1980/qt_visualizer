@@ -74,7 +74,7 @@
      <string>返回</string>
     </property>
    </widget>
-   <widget class="QOpenGLWidget" name="openGLWidget_2">
+   <widget class="QOpenGLWidget" name="demoShow">
     <property name="geometry">
      <rect>
       <x>110</x>
@@ -101,6 +101,19 @@
     </property>
     <property name="text">
      <string>集装箱显示</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton">
+    <property name="geometry">
+     <rect>
+      <x>110</x>
+      <y>180</y>
+      <width>89</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>显示集装箱</string>
     </property>
    </widget>
   </widget>

@@ -514,8 +514,15 @@ void PCLViewer::sendCommand(QTcpSocket& socket, const QString& command)
     }
 }
 
+void Container::returnToConter()
+{
+    this->show(); // 显示主界面
+}
+
+
 void PCLViewer::on_TiaoZhuan_clicked()
 {
+    emit returnToConter();
     Container *aw = new Container(); // 创建界面A的实例
     connect(aw, &Container::returnToMain, this, &PCLViewer::show); // 连接界面A的返回主界面信号和主界面的显示槽函数
     aw->show(); // 显示界面A
